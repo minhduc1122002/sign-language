@@ -3,12 +3,6 @@ import { StyleSheet, Text, View, StatusBar, ScrollView, SafeAreaView, TouchableO
 import { SectionGrid } from 'react-native-super-grid';
 
 function Category( { navigation } ) {
-    const goBack = () => {
-        if(!navigation.canGoBack()) {
-            return null;
-        }
-        return navigation.goBack()
-    } 
   return (
     <>
         <SectionGrid
@@ -36,13 +30,13 @@ function Category( { navigation } ) {
             ]}
             style={styles.gridView}
             renderItem={({item, section}) => (
-                <View style={styles.itemContainer}>
+                <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate("Study")}>
                     <Image style={styles.itemImage} source={{ uri: item.image }}/>
                     <View style={{padding: 5}}>
                         <Text style={styles.itemInfo.info}>{item.title}</Text>
                         <Text style={styles.itemInfo.level}>{item.level}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
             )}
             renderSectionHeader={({ section }) => (
                 <Text style={styles.sectionHeader}>{section.title}</Text>

@@ -8,6 +8,7 @@ import React, {useCallback, useState, useEffect} from 'react'
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import Navigation from './components/Navigation'
+import Study from './screen/Study';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -51,6 +52,11 @@ export default function App() {
           name="Navigation"
           options={{animationEnabled: true, header: () => null}}
           component={Navigation}
+        />
+        <Drawer.Screen
+          name="Study"
+          options={{animationEnabled: true, header: () => null}}
+          component={Study}
         />
       </Drawer.Navigator>
     </NavigationContainer>

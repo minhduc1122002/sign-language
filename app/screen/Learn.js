@@ -8,7 +8,7 @@ function Learn( { navigation } ) {
         {/* <View style={styles.header}>
             <Text>Header</Text>
         </View> */}
-        <Category/>
+        <Category navigation={navigation}/>
     </SafeAreaView>
   )
 }
