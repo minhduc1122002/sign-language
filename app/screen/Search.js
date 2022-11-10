@@ -9,6 +9,7 @@ import {
   View,
   FlatList,
   SafeAreaView,
+  TouchableOpacity,
 } from 'react-native';
 
 function Search( {navigation} ) {
@@ -54,29 +55,10 @@ function Search( {navigation} ) {
   const ItemView = ({ item }) => {
     return (
       // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => getItem(item)}>
-        {item.instance_id}
+      <Text style={styles.itemStyle} onPress={() => navigation.navigate("SearchResult", {item})}>
         {item.gloss}
       </Text>
     );
-  };
-
-  const ItemSeparatorView = () => {
-    return (
-      // Flat List Item Separator
-      <View
-        style={{
-          height: 0.5,
-          width: '100%',
-          backgroundColor: '#fe7878',
-        }}
-      />
-    );
-  };
-
-  const getItem = (item) => {
-    // Function for click on an item
-    alert('Id : ' + item.instance_id + ' Title : ' + item.gloss);
   };
 
   return (
@@ -86,8 +68,6 @@ function Search( {navigation} ) {
           searchIcon={
             <Feather name="search" color="#b4b4b4" size = {20} />
           }
-          containerStyle={styles.SearchBarStyle}
-          inputContainerStyle={styles.in}
           inputStyle={styles.textSearch}
           onChangeText={(text) => searchFilterFunction(text)}
           onClear={(text) => searchFilterFunction('')}
@@ -97,7 +77,6 @@ function Search( {navigation} ) {
         <FlatList
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ItemSeparatorView}
           renderItem={ItemView}
         />
       </View>
@@ -115,17 +94,9 @@ const styles = StyleSheet.create({
     padding: 6,
     fontSize: 20,
   },
-  in: {
-    backgroundColor: '#fff',
-    height: 50,
-    borderRadius: 5,
-  },
   textSearch: {
     color: '#fe7878',
   },
-  SearchBarStyle: {
-    backgroundColor: '#fe7878',
-  }
 });
 
 export default Search

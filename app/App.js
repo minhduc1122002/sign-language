@@ -9,6 +9,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import Navigation from './components/Navigation'
 import Study from './screen/Study';
+import SearchResult from './screen/SearchResult';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -57,6 +58,11 @@ export default function App() {
           name="Study"
           options={{animationEnabled: true, header: () => null}}
           component={Study}
+        />
+        <Drawer.Screen
+          name="SearchResult"
+          options={{animationEnabled: true, header: () => null}}
+          component={SearchResult}
         />
       </Drawer.Navigator>
     </NavigationContainer>
