@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Dictionary from '../screen/Dictionary.js'
+import Dictionary from '../screen/Search.js'
 import Learn from '../screen/Learn.js'
 import Recognition from '../screen/Recognition.js'
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -36,7 +36,7 @@ function Navigation() {
         />
         <Tab.Screen 
             name="Dictionary"
-            component={Dictionary}RR
+            component={Dictionary}
             options={{
                 animationEnabled: true,
                 header: () => null,
