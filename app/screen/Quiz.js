@@ -1,11 +1,16 @@
-import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Modal, Animated } from 'react-native'
-import React , { useState } from 'react'
+import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Modal, Animated, Dimensions } from 'react-native'
+import React , { useState, useRef, useEffect } from 'react'
 import quizData from '../data/QuizData'
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme'
+import { ScrollView } from 'react-native-gesture-handler';
+
+const { height, width } = Dimensions.get("window")
 
 const Quiz = ( {navigation} ) => {
   const allQuestions = quizData
+  const scroll = useRef(null)
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentOptionSelected, setCurrentOptionSelected] = useState(null);
   const [correctOption, setCorrectOption] = useState(null);
@@ -15,30 +20,51 @@ const Quiz = ( {navigation} ) => {
   const [showNextButton, setShowNextButton] = useState(false);
   const [showScoreModal, setShowScoreModal] = useState(false);
 
+  const [progress, setProgress] = useState(new Animated.Value(0));
+  const progessAnim = progress.interpolate({
+    inputRange: [0, allQuestions.length],
+    outputRange: ['0%', '100%']
+  })
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setShowScoreModal(false)
+      setCurrentQuestionIndex(0)
+      setScore(0)
+      setCurrentOptionSelected(null)
+      setCorrectOption(null)
+      setIsOptionDisabled(false)
+      setShowNextButton(false)
+      Animated.timing(progress, {
+          toValue: 100,
+          useNativeDriver: false
+      }).start()
+      scroll.current?.scrollTo({x: 0, animated: false})
+    });
+    return unsubscribe;
+ }, [navigation]);
+
   const validateAnswer = (selectedOption) => {
     let correct_option = allQuestions[currentQuestionIndex]['correct_option'];
     setCurrentOptionSelected(selectedOption);
     setCorrectOption(correct_option);
     setIsOptionDisabled(true);
-    if(selectedOption==correct_option){
-      // Set Score
+    if (selectedOption==correct_option) {
       setScore(score + 1)
     }
-    // Show Next Button
     setShowNextButton(true);
   }
 
   const handleNext = () => {
     if(currentQuestionIndex == allQuestions.length - 1){
-      //Last Question
-      //Show Score Modal
       setShowScoreModal(true);
-    } else{
-      setCurrentQuestionIndex(currentQuestionIndex+1);
+    } else {
       setCurrentOptionSelected(null);
       setCorrectOption(null);
       setIsOptionDisabled(false);
+      setCurrentQuestionIndex(currentQuestionIndex+1);
       setShowNextButton(false);
+      scroll.current?.scrollTo({x: width * (currentQuestionIndex + 1), animated: true})
     }
     Animated.timing(progress, {
       toValue: currentQuestionIndex+1,
@@ -49,7 +75,6 @@ const Quiz = ( {navigation} ) => {
 
   const restartQuiz = () => {
     setShowScoreModal(false);
-
     setCurrentQuestionIndex(0);
     setScore(0);
 
@@ -57,7 +82,7 @@ const Quiz = ( {navigation} ) => {
     setCorrectOption(null);
     setIsOptionDisabled(false);
     setShowNextButton(false);
-
+    scroll.current?.scrollTo({x: 0, animated: true})
     Animated.timing(progress, {
       toValue: 0,
       duration: 1000,
@@ -65,86 +90,58 @@ const Quiz = ( {navigation} ) => {
     }).start();
   }
   
-  const renderQuestion = () => {
+  const renderQuestion = ( currentQuestion ) => {
     return (
       <View style={{
         marginVertical: 40
       }}>
         {/*Question Counter*/}
-        <View style={{
-          flexDirection: 'row',
-          alignItems: 'flex-end' 
-        }}>
-          <Text style={{color: COLORS.black, fontSize: 20, opacity: 0.6, marginRight:2}}>{currentQuestionIndex+1}</Text>
-          <Text style={{color: COLORS.black, fontSize: 20, opacity: 0.6}}>/ {allQuestions.length}</Text>
+        <View style={styles.questionCounter.container}>
+          <Text style={styles.questionCounter.text}>{currentQuestionIndex+1} / {allQuestions.length}</Text>
         </View>
 
         {/*Question*/}
-        <Text style={{
-          color: COLORS.black,
-          fontSize: 30
-        }}>{allQuestions[currentQuestionIndex]?.question}</Text>
+        <Text style={styles.question.text}>{currentQuestion.question}</Text>
       </View>
     )
   }
 
-  const renderOptions = () => {
+  const renderOptions = ( currentQuestion ) => {
+    const colorStyle = (option) => option==correctOption ? COLORS.success+'20'
+    : option==currentOptionSelected ? COLORS.error+'20'
+    : COLORS.white
     return (
       <View>
         {
-          allQuestions[currentQuestionIndex]?.options.map(option => (
+          currentQuestion.options.map(option => {
+            return(
             <TouchableOpacity
-            onPress={() => validateAnswer(option)}
-            disabled={isOptionDisabled}
-            key={option}
-            style={{
-              borderWidth: 3, borderColor: option==correctOption
-              ? COLORS.success
-              : option==currentOptionSelected
-              ? COLORS.error
-              : COLORS.secondary+'40',
-              backgroundColor: option==correctOption
-              ? COLORS.success+'20'
-              : option==currentOptionSelected
-              ? COLORS.error+'20'
-              : COLORS.secondary+'20',
-              height: 60, borderRadius: 20,
-              flexDirection: 'row',
-              alignItems: 'center', justifyContent: 'space-between',
-              paddingHorizontal: 20,
-              marginVertical: 10 
-            }}
+              onPress={() => validateAnswer(option)}
+              disabled={isOptionDisabled}
+              key={option}
+              style={[styles.option.container, {
+                borderColor: option==correctOption
+                ? COLORS.success
+                : option==currentOptionSelected
+                ? COLORS.error
+                : COLORS.secondary,
+                backgroundColor: colorStyle(option),
+              }]}
             >
-              <Text style={{fontSize: 20, color: COLORS.black}}>{option}</Text>
-
-              {/*Show Check or Cross Icon based on correct answer*/}
+              <Text style={styles.option.text}>{option}</Text>
               {
                 option==correctOption ? (
-                  <View style={{
-                    width: 30, height: 30, borderRadius: 30/2,
-                    backgroundColor: COLORS.success,
-                    justifyContent: 'center', alignItems: 'center'
-                  }}>
-                    <AntDesign name="check" style={{
-                      color: COLORS.white,
-                      fontSize: 20
-                    }}/>
+                  <View style={styles.option.success}>
+                    <AntDesign name="check" style={{color: "#fff", fontSize: 20}}/>
                   </View>
-                ): option == currentOptionSelected ? (
-                    <View style={{
-                      width: 30, height: 30, borderRadius: 30/2,
-                      backgroundColor: COLORS.error,
-                      justifyContent: 'center', alignItems: 'center'
-                    }}>
-                      <AntDesign name="close" style={{
-                        color: COLORS.white,
-                        fontSize: 20
-                      }}/>
+                ) : option == currentOptionSelected ? (
+                    <View style={styles.option.error}>
+                      <AntDesign name="close" style={{color: "#fff", fontSize: 20}}/>
                     </View>
                 ) : null
               }
             </TouchableOpacity>
-          ))
+          )})
         }
       </View>
     )
@@ -154,70 +151,49 @@ const Quiz = ( {navigation} ) => {
     if(showNextButton){
       return (
         <TouchableOpacity 
-        onPress={handleNext}
-        style={{
-          marginTop: 20, width: '100%', backgroundColor: COLORS.accent, paading: 20, borderRadius: 5 
-        }}>
-          <Text style={{fontSize: 20, color: COLORS.black, textAlign: 'center'}}>Next</Text>
+          onPress={handleNext}
+          style={styles.nextButton.container}
+        >
+          <Text style={styles.nextButton.text}>Next</Text>
         </TouchableOpacity>
       )
     } else {
       return null
     }
   }
-
-  const [progress, setProgress] = useState(new Animated.Value(0));
-  const progessAnim = progress.interpolate({
-    inputRange: [0, allQuestions.length],
-    outputRange: ['0%', '100%']
-  })
   const renderProgressBar = () => {
     return (
-      <View style={{
-        width: '100%',
-        height: 20,
-        borderRadius: 20,
-        backgroundColor: '#00000020'
-      }}>
-        <Animated.View style={[{
-          height: 20,
-          borderRadius: 20,
-          backgroundColor: COLORS.accent
-        },{
-          width: progessAnim
-        }]}>
-
+      <View style={styles.progressBar.container}>
+        <Animated.View style={[styles.progressBar.component, { width: progessAnim }]}>
         </Animated.View>
       </View>
     )
   }
 
   return (
-    <SafeAreaView style={{
-      flex: 1
-    }}>
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.primary} />
-      <View style={{
-        flex: 1,
-        paddingVertical: 40,
-        paddingHorizontal: 16,
-        backgroundColor: COLORS.background,
-        position: 'relative'
-      }}>
-
-        {/*ProgressBar*/}
+    <SafeAreaView style={styles.container}>
+      <View style={{paddingHorizontal: 16}}>
         {renderProgressBar()}
-
-        {/* Question*/}
-        {renderQuestion()}
-        
-        {/*Options*/}
-        {renderOptions()}
-
-        {/*Show Next button*/}
+      </View>
+      <ScrollView
+        ref={scroll}
+        horizontal={true}
+        pagingEnabled={true}
+        scrollEnabled={false}
+        showsHorizontalScrollIndicator={false}
+      >
+        {allQuestions.map((question, index) => {
+          return (
+          <View style={{width: width, paddingHorizontal: 16}} key={index}>
+            {renderQuestion(question)}
+            {renderOptions(question)}
+          </View>
+          )
+        })}
+      </ScrollView>
+      <View style={{paddingHorizontal: 16}}>
         {renderNextButton()}
-
-        {/*Score Modal*/}
+      </View>
         <Modal
           animationType="slide"
           transparent={true}
@@ -225,12 +201,12 @@ const Quiz = ( {navigation} ) => {
         >
           <View style={{
             flex: 1,
-            backgroundColor: COLORS.primary,
+            backgroundColor: '#fff',
             alignItems: 'center',
             justifyContent: 'center'
           }}>
             <View style={{
-              backgroundColor: COLORS.white,
+              backgroundColor: "#fff",
               width: '90%',
               borderRadius: 20,
               padding: 20,
@@ -252,7 +228,6 @@ const Quiz = ( {navigation} ) => {
                   fontSize: 20, color: COLORS.black
                 }}>/ {allQuestions.length}</Text>
               </View>
-              {/*Retry Quiz button*/}
               <TouchableOpacity 
               onPress={restartQuiz}
               style={{
@@ -267,13 +242,92 @@ const Quiz = ( {navigation} ) => {
 
           </View>
         </Modal>
-
-        {/*Background Image*/}
-      </View>
     </SafeAreaView>
   )
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingVertical: 36,
+    backgroundColor: '#fff',
+    position: 'relative'
+  },
+  progressBar: {
+    container: {
+      width: '100%',
+      height: 20,
+      borderRadius: 20,
+      backgroundColor: 'rgba(0, 0, 0, 0.125)'
+    },
+    component: {
+      height: 20,
+      borderRadius: 20,
+      backgroundColor: COLORS.accent
+    }
+  },
+  questionCounter: {
+    container: {
+      flexDirection: 'row',
+      alignItems: 'flex-end'
+    },
+    text: {
+      color: '#171717',
+      fontSize: 20,
+      opacity: 0.6,
+    }
+  },
+  question: {
+    text: {
+      color: '#171717',
+      fontSize: 30,
+    }
+  },
+  option: {
+    container: {
+      borderWidth: 2,
+      height: 60, 
+      borderRadius: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      marginVertical: 10
+    },
+    text: {
+      fontSize: 20,
+      color: '#171717'
+    },
+    success: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: '#00C851',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    error: {
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: '#FF4444',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }
+  },
+  nextButton: {
+    container: {
+      marginTop: 24,
+      width: '100%',
+      backgroundColor: "#2596be",
+      padding: 15,
+      borderRadius: 15
+    },
+    text: {
+      fontSize: 20,
+      color: "#fff",
+      textAlign: 'center'
+    }
+  }
+})
 export default Quiz
-
-const styles = StyleSheet.create({})

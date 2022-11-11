@@ -10,6 +10,7 @@ import {
   FlatList,
   SafeAreaView,
   TouchableOpacity,
+  StatusBar
 } from 'react-native';
 
 function Search( {navigation} ) {
@@ -54,26 +55,31 @@ function Search( {navigation} ) {
 
   const ItemView = ({ item }) => {
     return (
-      // Flat List Item
-      <Text style={styles.itemStyle} onPress={() => navigation.navigate("SearchResult", {item})}>
-        {item.gloss}
-      </Text>
+      <View style={styles.itemContainer}>
+        <Text style={styles.itemText} onPress={() => navigation.navigate("SearchResult", {item})}>
+          {item.instance_id}
+          {item.gloss}
+        </Text>
+      </View>
     );
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-      <Searchbar 
-          searchIcon={
-            <Feather name="search" color="#b4b4b4" size = {20} />
-          }
-          inputStyle={styles.textSearch}
-          onChangeText={(text) => searchFilterFunction(text)}
-          onClear={(text) => searchFilterFunction('')}
-          value={search}
-          placeholder="Search"
-        />
+        <View style={styles.searchBarContainer}>
+          <Searchbar 
+            searchIcon={
+              <Feather name="search" color="#b4b4b4" size = {20} />
+            }
+            style={styles.searchBar}
+            inputStyle={styles.textSearch}
+            onChangeText={(text) => searchFilterFunction(text)}
+            onClear={(text) => searchFilterFunction('')}
+            value={search}
+            placeholder="Search"
+          />
+        </View>
         <FlatList
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
@@ -86,16 +92,28 @@ function Search( {navigation} ) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'white',
-    marginTop: 52,
-    padding: 5,
+    flex: 1,
+    backgroundColor: '#fff',
   },
-  itemStyle: {
-    padding: 6,
-    fontSize: 20,
+  itemContainer: {
+    borderColor: "#f3f3f3",
+    borderBottomWidth: 2
+  },
+  searchBarContainer: {
+    padding: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchBar: {
+    borderRadius: 8
   },
   textSearch: {
     color: '#fe7878',
+  },
+  itemText: {
+    padding: 12,
+    fontSize: 18,
+    fontFamily: 'Montserrat'
   },
 });
 
