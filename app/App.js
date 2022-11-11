@@ -10,6 +10,7 @@ import * as Font from 'expo-font';
 import Navigation from './components/Navigation'
 import Study from './screen/Study';
 import SearchResult from './screen/SearchResult';
+import Quiz from './screen/Quiz';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -63,6 +64,11 @@ export default function App() {
           name="SearchResult"
           options={{animationEnabled: true, header: () => null}}
           component={SearchResult}
+        />
+        <Drawer.Screen
+          name="Quiz"
+          options={{animationEnabled: true, header: () => null}}
+          component={Quiz}
         />
       </Drawer.Navigator>
     </NavigationContainer>

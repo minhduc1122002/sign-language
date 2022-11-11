@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { Feather } from '@expo/vector-icons';
+import { Searchbar } from 'react-native-paper';
 import { StyleSheet, Text, View, StatusBar, ScrollView, SafeAreaView, TouchableOpacity, Button, FlatList, Image } from 'react-native';
 import { SectionGrid } from 'react-native-super-grid';
 
@@ -42,9 +44,21 @@ function Category( { navigation } ) {
                 <Text style={styles.sectionHeader}>{section.title}</Text>
             )}
             ListHeaderComponent={() => (
-                <View style={{flex: 1, padding: 10}}>
-                    <Image style={styles.banner} source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}/>
-                </View>
+                <>
+                    <View style={{flex: 1, padding: 10}}>
+                        <Image style={styles.banner} source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}/>
+                    </View>
+                    <View style={{flex: 1, padding: 10, marginVertical: 16}}>
+                        <Searchbar 
+                            searchIcon={
+                                <Feather name="search" color="#b4b4b4" size = {20} />
+                            }
+                            style={styles.searchBar}
+                            inputStyle={styles.textSearch}
+                            placeholder="Search"
+                        />
+                    </View>
+                </>
             )}
         />
     </>
@@ -85,7 +99,6 @@ const data = [
 ]
 const styles = StyleSheet.create({
     gridView: {
-        marginTop: 64,
         flex: 1,
     },
     itemContainer: {
@@ -132,7 +145,18 @@ const styles = StyleSheet.create({
         resize: 'cover',
         height: 200,
         borderRadius: 10,
-    }
+    },
+    searchBarContainer: {
+        padding: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    searchBar: {
+        borderRadius: 8
+    },
+    textSearch: {
+        color: '#fe7878',
+    },
 });
 
 export default Category

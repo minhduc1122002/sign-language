@@ -24,7 +24,7 @@ function SearchResult({ route, navigation }) {
   }
   return (
       <View>
-        <Header
+        {/* <Header
           backgroundColor = '#fff'
           leftComponent={
             <TouchableOpacity
@@ -36,7 +36,7 @@ function SearchResult({ route, navigation }) {
           }
           centerComponent={
             <Text style={styles.glossStyle}>{item.gloss}</Text>}
-        />
+        /> */}
         <Image source={require('../assets/images/cry.jpg')} style={styles.image}/>
       </View>
   );

@@ -2,12 +2,6 @@ import React from 'react'
 import { StyleSheet, Text, View, StatusBar, ScrollView, SafeAreaView, TouchableOpacity, Button } from 'react-native';
 
 function Recognition( { navigation } ) {
-    const goBack = () => {
-        if(!navigation.canGoBack()) {
-            return null;
-        }
-        return navigation.goBack()
-    } 
   return (
     <SafeAreaView style={styles.container}>
         {/* <View style={styles.header}>
@@ -19,7 +13,7 @@ function Recognition( { navigation } ) {
             justifyContent: 'center', alignItems: 'center',
             }}>
                 <Text>Recognition</Text>
-                <Button title="Go Back" onPress={() => goBack()}/>
+                <Button title="Go Back" onPress={() => navigation.navigate("Quiz")}/>
             </View>
         </ScrollView>
         </View>

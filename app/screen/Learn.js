@@ -5,9 +5,7 @@ import Category from '../components/Category.js'
 function Learn( { navigation } ) { 
   return (
     <SafeAreaView style={styles.container}>
-        {/* <View style={styles.header}>
-            <Text>Header</Text>
-        </View> */}
+        <StatusBar barStyle="dark-content" backgroundColor='#fff' />
         <Category navigation={navigation}/>
     </SafeAreaView>
   )
@@ -18,13 +16,19 @@ const styles = StyleSheet.create({
         flex: 1,
         height: '100%',
         backgroundColor: '#fff',
+        paddingTop: 36,
     },
-    header: {
+    headerContainer: {
         display: 'flex',
-        paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-        backgroundColor: 'red',
+        backgroundColor: '#fff',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 12,
+        paddingTop: 10
+    },
+    headerText: {
+        fontFamily: "Poppins",
+        fontSize: 20
     },
     scrollContainer: {
         flex: 1,
