@@ -26,6 +26,7 @@ function SearchResult({ route, navigation }) {
     return navigation.goBack()
   }
   return (
+<<<<<<< HEAD
     <View>
     <Header
       backgroundColor = '#fff'
@@ -52,6 +53,24 @@ function SearchResult({ route, navigation }) {
       onPlaybackStatusUpdate={status => setStatus(() => status)}
     />
   </View>
+=======
+      <View>
+        {/* <Header
+          backgroundColor = '#fff'
+          leftComponent={
+            <TouchableOpacity
+            style={{padding: 5}}
+            onPress={() => goBack()}
+          >
+            <Image source={require('../assets/images/close.png')} style={{height: 20, width: 20}}/>
+          </TouchableOpacity>
+          }
+          centerComponent={
+            <Text style={styles.glossStyle}>{item.gloss}</Text>}
+        /> */}
+        <Image source={require('../assets/images/cry.jpg')} style={styles.image}/>
+      </View>
+>>>>>>> f4bf260281f3d3788262c289aed9bc03ccf1964e
   );
   
 };
