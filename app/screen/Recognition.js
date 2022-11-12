@@ -13,11 +13,6 @@ function Recognition( { navigation } ) {
             justifyContent: 'center', alignItems: 'center',
             }}>
                 <Text>Recognition</Text>
-<<<<<<< HEAD
-                <Button title="Go Quiz" onPress={() => navigation.navigate("Quiz")}/>
-=======
-                <Button title="Go Back" onPress={() => navigation.navigate("Quiz")}/>
->>>>>>> f4bf260281f3d3788262c289aed9bc03ccf1964e
             </View>
         </ScrollView>
         </View>

@@ -36,11 +36,7 @@ const Quiz = ( {navigation} ) => {
       setIsOptionDisabled(false)
       setShowNextButton(false)
       Animated.timing(progress, {
-<<<<<<< HEAD
-          toValue: 100,
-=======
           toValue: 0,
->>>>>>> f4bf260281f3d3788262c289aed9bc03ccf1964e
           useNativeDriver: false
       }).start()
       scroll.current?.scrollTo({x: 0, animated: false})

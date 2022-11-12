@@ -1,15 +1,245 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, StyleSheet, Alert, TouchableOpacity, Text, Animated } from 'react-native';
-import { ProgressBar } from 'react-native-paper';
-import { Octicons } from '@expo/vector-icons';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Image, StyleSheet, Alert, TouchableOpacity, Text, Animated, Dimensions, StatusBar, Modal } from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { ScrollView } from 'react-native-gesture-handler';
+import { COLORS, SIZES } from '../constants/theme'
+
+const { height, width } = Dimensions.get("window")
+
+const flashcards = [
+    {
+        word: "apple",
+        image: require("../assets/images/cry.jpg"),
+        video: require("../assets/images/cry.jpg")
+    },
+    {
+      word: "banana",
+      image: require("../assets/images/cry.jpg"),
+      video: require("../assets/images/cry.jpg")
+    },
+    {
+        word: "orange",
+        image: require("../assets/images/cry.jpg"),
+        video: require("../assets/images/cry.jpg")
+    },
+    {
+        word: "milk",
+        image: require("../assets/images/cry.jpg"),
+        video: require("../assets/images/cry.jpg")
+    }
+
+]
+
+function Study( {navigation} ) {
+    const [flashCardIndex, setFlashCardIndex] = useState(1)
+    const [progress, setProgress] = useState(new Animated.Value(1))
+    const [showQuizModal, setShowQuizModal] = useState(false);
+
+    const scroll = useRef(null)
+    const progressAnim = progress.interpolate({
+        inputRange: [1, flashcards.length],
+        outputRange: [100, 300]
+    })
+    useEffect(() => {
+      const unsubscribe = navigation.addListener('focus', () => {
+        setFlashCardIndex(1)
+        Animated.timing(progress, {
+            toValue: 1,
+            useNativeDriver: false
+        }).start()
+        scroll.current?.scrollTo({x: 0, animated: false})
+        setShowQuizModal(false)
+      });
+      return unsubscribe;
+   }, [navigation]);
+   
+    const back = () => {
+        if (flashCardIndex > 1) {
+            setFlashCardIndex(flashCardIndex - 1)
+            Animated.timing(progress, {
+                toValue: flashCardIndex - 1,
+                duration: 1000,
+                useNativeDriver: false
+            }).start()
+            scroll.current?.scrollTo({x: width * (flashCardIndex - 2), animated: true})
+        }
+    }
+    const next = () => {
+        if (flashCardIndex < flashcards.length) {
+            setFlashCardIndex(flashCardIndex + 1)
+            Animated.timing(progress, {
+                toValue: flashCardIndex + 1,
+                duration: 1000,
+                useNativeDriver: false
+            }).start()
+            scroll.current?.scrollTo({x: width * flashCardIndex, animated: true})
+        } else {
+          setShowQuizModal(true)
+        }
+    }
+    const goBack = () => {
+        if(!navigation.canGoBack()) {
+            return null;
+        }
+        return navigation.goBack()
+    }
+    return (
+      <View style={styles.container}>
+          <View style={styles.headerBar}>
+            <TouchableOpacity
+              style={{padding: 5}}
+              onPress={() => goBack()}
+            >
+              <Image source={require('../assets/images/close.png')} style={{height: 20, width: 20}}/>
+            </TouchableOpacity>
+            <View style={styles.progressBar}>
+              <Animated.View 
+                  style={{
+                      height: 24,
+                      borderRadius: 24,
+                      backgroundColor: '#30bdf0',
+                      borderColor: '#2ba9d6',
+                      borderWidth: 5,
+                      width: progressAnim
+                  }}>
+              </Animated.View>
+            </View>
+          </View>
+          <ScrollView
+            ref={scroll}
+            horizontal={true}
+            pagingEnabled={true}
+            scrollEnabled={false}
+            showsHorizontalScrollIndicator={false}
+            style={styles.scrollContainer}
+          > 
+            {flashcards.map((flashcard, index) => (
+              <View style={styles.contentContainer} key={index}>
+                <View style={styles.content}>
+                <Image style={styles.contentImage} source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}/>
+                  <Text style={styles.contentText}>{flashcard.word}</Text>
+                </View>
+              </View>
+            ))}
+          </ScrollView>
+          <View style={styles.buttons}>
+            <TouchableOpacity
+              style={styles.directionButton}
+              onPress={() => back()}
+            >
+              <FontAwesome name="chevron-left" style={{marginRight: 8}} size={30} color='#2596be' />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.flipButton}
+              onPress={() => next()}
+            >
+              <MaterialCommunityIcons name="swap-horizontal-variant" size={40} color='#2596be' />
+              <Text style={{color: '#2596be', fontFamily: "Poppins", fontSize: 18}}>FLIP</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.directionButton}
+              onPress={() => next()}
+            >
+              <FontAwesome name="chevron-right" style={{marginLeft: 8}} size={30} color='#2596be' />
+            </TouchableOpacity>
+          </View>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showQuizModal}
+          >
+            <View style={{
+              flex: 1,
+              backgroundColor: '#fff',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}>
+              <View style={{
+                backgroundColor: "#fff",
+                width: '90%',
+                borderRadius: 20,
+                padding: 20,
+                alignItems: 'center'
+              }}>
+                <Text style={{fontSize: 30, fontWeight: 'bold'}}>Hi</Text>
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  marginVertical: 20
+                }}>
+                  <Text style={{ fontSize: 20, color: COLORS.black}}>Navigate To Quiz</Text>
+                </View>
+                <TouchableOpacity 
+                  onPress={() => navigation.navigate("Quiz")}
+                  style={{
+                    backgroundColor: COLORS.accent,
+                    padding: 20, width: '100%', borderRadius: 20
+                }}>
+                  <Text style={{ textAlign: 'center', color: COLORS.black, fontSize: 20}}>Take Quiz</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </Modal>
+        </View>
+    )
+}
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 60,
-    paddingLeft: 20,
-    paddingRight: 20,
     flex: 1,
+    backgroundColor: '#fff',
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 24,
+  },
+  headerBar: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    alignItems: "center"
+  },
+  progressBar: {
+    width: '85%',
+    height: 24,
+    backgroundColor: '#f3f3f3',
+    borderRadius: 20,
+  },
+  contentContainer: {
+    width: width,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  content: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: width * 0.9,
+    borderRadius: 20,
+    paddingVertical: 48,
+    paddingHorizontal: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
     backgroundColor: '#fff'
+    
+  },
+  contentImage: {
+    width: '90%',
+    aspectRatio: 1.25,
+    borderRadius: 10,
+    marginBottom: 32,
+  },
+  contentText: {
+    fontSize: 28,
+    fontFamily: 'Montserrat'
   },
   directionButton: {
     display: 'flex', 
@@ -25,178 +255,39 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    width: 60,
+    height: 60,
   },
-  headerBar: {
+  flipButton: {
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+        width: 0,
+        height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    backgroundColor: '#fff',
+    width: '30%',
+    padding: 12,
+    height: 60,
   },
   buttons: {
-    marginTop: 20,
+    padding: 20,
+    width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
-  progressBar: {
-    width: 300,
-    height: 30,
-    backgroundColor: '#f3f3f3',
-    borderRadius: 20,
-  },    
-  image: {
-    width: 300,
-    height: 300,
-    marginBottom: 30,
-  },
-  content: {
-    padding: 40, 
-    alignItems: 'center',
-    borderColor: '#e8e8e8',
-    width: 370,
-    height: 500,
-    borderWidth: 3,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+  scrollContainer: {
+    marginTop: 40,
   },
 });
-
-const flashcards = [
-    {
-        word: "apple",
-        image: require("../assets/images/cry.jpg"),
-        video: require("../assets/images/cry.jpg")
-    },
-    {
-        word: "banana",
-        image: require("../assets/images/cry.jpg"),
-        video: require("../assets/images/cry.jpg")
-    },
-    {
-        word: "orange",
-        image: require("../assets/images/cry.jpg"),
-        video: require("../assets/images/cry.jpg")
-    },
-    {
-        word: "orange2",
-        image: require("../assets/images/cry.jpg"),
-        video: require("../assets/images/cry.jpg")
-    }
-]
-
-function Study( {navigation} ) {
-    const [flashCardIndex, setFlashCardIndex] = useState(1)
-    const [progress, setProgress] = useState(new Animated.Value(1));
-    let progressAnim = progress.interpolate({
-        inputRange: [1, flashcards.length],
-        outputRange: [100, 300]
-    })
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            setFlashCardIndex(1);
-            setProgress(new Animated.Value(1))
-            progressAnim = progress.interpolate({
-                inputRange: [1, flashcards.length],
-                outputRange: [100, 300]
-            })
-            console.log("Hi")
-            console.log(flashCardIndex)
-            console.log(progress)
-            console.log(progressAnim)
-        });
-        return unsubscribe;
-     }, [navigation]);
-    const back = () => {
-        if (flashCardIndex > 1) {
-            setFlashCardIndex(flashCardIndex - 1)
-            Animated.timing(progress, {
-                toValue: flashCardIndex - 1,
-                useNativeDriver: false
-            }).start()
-        }
-    }
-    const next = () => {
-        if (flashCardIndex < flashcards.length) {
-            setFlashCardIndex(flashCardIndex + 1)
-            Animated.timing(progress, {
-                toValue: flashCardIndex + 1,
-                useNativeDriver: false
-            }).start()
-            console.log(flashCardIndex)
-            console.log(progress)
-            console.log(progressAnim)
-        }
-    }
-    const goBack = () => {
-        if(!navigation.canGoBack()) {
-            return null;
-        }
-        setFlashCardIndex(1)
-            Animated.timing(progress, {
-                toValue: 1,
-                useNativeDriver: false
-            }).start()
-        return navigation.goBack()
-    }
-  return (
-    <View style={styles.container}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={{padding: 5}}
-            onPress={() => goBack()}
-          >
-            <Image source={require('../assets/images/close.png')} style={{height: 20, width: 20}}/>
-          </TouchableOpacity>
-          <View style={styles.progressBar}>
-            <Animated.View 
-                style={{
-                    height: 30,
-                    borderRadius: 20,
-                    backgroundColor: '#8fdf02',
-                    borderColor: '#7bc70e',
-                    borderWidth: 5,
-                    width: progressAnim
-                }}>
-            </Animated.View>
-          </View>
-        </View>
-        
-        <View style={{marginTop: 40, justifyContent: 'center', alignItems: 'center',}}> 
-          <View style={styles.content}>
-            <Image
-              style={styles.image}
-              source={flashcards[flashCardIndex - 1].image}
-            />
-            <Text style={{fontSize: 30}}>{flashcards[flashCardIndex - 1].word}</Text>
-          </View>
-        </View>
-
-        <View style={styles.buttons}>
-          <TouchableOpacity
-            style={styles.directionButton}
-            onPress={() => back()}
-          >
-            <Octicons name="arrow-left" size={50} color='#2596be' />
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            onPress={() => Alert.alert('Right button pressed')}
-          >
-            <Image source={require('../assets/images/repeat.png')} style={{height: 60, width: 60}}/>
-          </TouchableOpacity>
-
-
-          <TouchableOpacity
-            style={styles.directionButton}
-            onPress={() => next()}
-          >
-            <Octicons name="arrow-right" size={50} color='#2596be' />
-          </TouchableOpacity>
-          
-        </View>
-
-      </View>
-  )
-}
 
 export default Study
