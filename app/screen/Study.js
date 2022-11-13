@@ -54,7 +54,7 @@ function Study( {navigation} ) {
       return unsubscribe;
    }, [navigation]);
    
-    const back = () => {
+    const prev = () => {
         if (flashCardIndex > 1) {
             setFlashCardIndex(flashCardIndex - 1)
             Animated.timing(progress, {
@@ -84,6 +84,60 @@ function Study( {navigation} ) {
         }
         return navigation.goBack()
     }
+
+    // Flip
+    const [val, setVal] = useState(0)
+    const [value, setValue] = useState(new Animated.Value(0))
+    
+    const frontInterpolate = value.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['0deg', '180deg'],
+    })
+    const backInterpolate = value.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['180deg', '360deg']
+    })
+    const frontOpacity = value.interpolate({
+      inputRange: [89, 90],
+      outputRange: [1, 0]
+    })
+    const backOpacity = value.interpolate({
+      inputRange: [89, 90],
+      outputRange: [0, 1]
+    })
+
+    const flipCard = () => {
+      if (val >= 90) {
+        setVal(0)
+        Animated.spring(value,{
+          toValue: 0,
+          friction: 8,
+          tension: 1,
+          useNativeDriver: false
+        }).start();
+      } else {
+        setVal(180)
+        Animated.spring(value,{
+          toValue: 180,
+          friction: 8,
+          tension: 1,
+          useNativeDriver: false
+        }).start();
+      }
+
+    }
+
+    const frontAnimatedStyle = {
+      transform: [
+        { rotateY: frontInterpolate }
+      ]
+    }
+    const backAnimatedStyle = {
+      transform: [
+        { rotateY: backInterpolate }
+      ]
+    }
+
     return (
       <View style={styles.container}>
           <View style={styles.headerBar}>
@@ -116,23 +170,41 @@ function Study( {navigation} ) {
           > 
             {flashcards.map((flashcard, index) => (
               <View style={styles.contentContainer} key={index}>
-                <View style={styles.content}>
-                <Image style={styles.contentImage} source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}/>
-                  <Text style={styles.contentText}>{flashcard.word}</Text>
-                </View>
+                <Animated.View style={[ frontAnimatedStyle, {opacity: frontOpacity}]}>
+                  <TouchableOpacity style={styles.content} activeOpacity={1} onPress={() => flipCard()}>
+                    <Image 
+                      style={styles.contentImage} 
+                      // source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}
+                      source={require('../assets/images/cry.jpg')}
+                    />
+                    <Text style={styles.contentText}>{flashcard.word}</Text>
+                  </TouchableOpacity> 
+                </Animated.View>
+
+                <Animated.View style={[styles.flipCardBack, backAnimatedStyle, {opacity: backOpacity}]}>
+                  <TouchableOpacity style={styles.content} activeOpacity={1} onPress={() => flipCard()}>
+                    <Image 
+                      style={styles.contentImage} 
+                      // source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}
+                      source={require('../assets/images/cry.jpg')}
+                    />
+                    <Text style={styles.contentText}>{flashcard.word}</Text>
+                  </TouchableOpacity>
+                </Animated.View>
+
               </View>
             ))}
           </ScrollView>
           <View style={styles.buttons}>
             <TouchableOpacity
               style={styles.directionButton}
-              onPress={() => back()}
+              onPress={() => prev()}
             >
               <FontAwesome name="chevron-left" style={{marginRight: 8}} size={30} color='#2596be' />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.flipButton}
-              onPress={() => next()}
+              onPress={() => flipCard()}
             >
               <MaterialCommunityIcons name="swap-horizontal-variant" size={40} color='#2596be' />
               <Text style={{color: '#2596be', fontFamily: "Poppins", fontSize: 18}}>FLIP</Text>
@@ -229,11 +301,11 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     backgroundColor: '#fff'
-    
   },
   contentImage: {
-    width: '90%',
-    aspectRatio: 1.25,
+    width: '100%',
+    height: undefined,
+    aspectRatio: 1,
     borderRadius: 10,
     marginBottom: 32,
   },
@@ -286,7 +358,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   scrollContainer: {
-    marginTop: 40,
+    marginTop: 0,
+  },
+  flipCardBack: {
+    position: "absolute",
   },
 });
 
