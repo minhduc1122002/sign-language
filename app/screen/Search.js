@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Searchbar } from 'react-native-paper';
 
@@ -17,18 +17,29 @@ function Search( {navigation} ) {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
-
+  const [screenLoading, setScreenLoading] = useState(true)
   useEffect(() => {
     fetch('https://raw.githubusercontent.com/dxli94/WLASL/master/start_kit/WLASL_v0.3.json')
       .then((response) => response.json())
       .then((responseJson) => {
         setFilteredDataSource(responseJson);
         setMasterDataSource(responseJson);
+        setScreenLoading(false)
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (!screenLoading) {
+      await SplashScreen.hideAsync();
+    }
+  }, [screenLoading]);
+
+  if (screenLoading) {
+    return null;
+  }
 
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
