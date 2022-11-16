@@ -1,7 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Feather } from '@expo/vector-icons';
-import { Searchbar } from 'react-native-paper';
-import {Header} from 'react-native-elements';
 import { Video, AVPlaybackStatus } from 'expo-av';
 
 // import all the components we are going to use
@@ -12,60 +9,39 @@ import {
   FlatList,
   SafeAreaView,
   TouchableOpacity,
-  Image
+  Image,
+  ActivityIndicator
 } from 'react-native';
 
 function SearchResult({ route, navigation }) {
-  const video = React.useRef(null);
-  const [status, setStatus] = React.useState({});
   const { item, otherParam } = route.params;
-  const [screenLoading, setScreenLoading] = useState(true)
-  const goBack = () => {
-    if(!navigation.canGoBack()) {
-        return null;
-    }
-    return navigation.goBack()
-  }
-  const onLayoutRootView = useCallback(async () => {
-    if (!screenLoading) {
-      await SplashScreen.hideAsync();
-    }
-  }, [screenLoading]);
-
-  if (screenLoading) {
-    return null;
-  }
+  const [isReady, setReady] = useState(false);
+  const filter_instances = item.instances.filter(video => video.url.indexOf(".mp4") != -1)
   return (
-    <View>
-    <Text style={styles.glossStyle}>{item.gloss}</Text>
+    <View style={styles.container}>
+      {!isReady &&
+          <Text style={styles.glossStyle}>Loading ...</Text>
+      }
     <Video
-      ref={video}
       style={styles.videoStyle}
+      onLoadStart={() => setReady(false)}
       source={{
-        url: item.instances[0].url,
+        uri: filter_instances[0].url
       }}
       useNativeControls
       resizeMode="contain"
       isLooping
-      onPlaybackStatusUpdate={status => setStatus(() => status)}
-    />
-    <Video
-      ref={video}
-      style={styles.videoStyle}
-      source={{
-        url: item.instances[1].url,
-      }}
-      useNativeControls
-      resizeMode="contain"
-      isLooping
-      onPlaybackStatusUpdate={status => setStatus(() => status)}
+      onReadyForDisplay={() => setReady(true)}
     />
   </View>
   );
-  
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
   glossStyle: {
     fontSize: 20,
     padding: 20,
