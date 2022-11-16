@@ -7,31 +7,9 @@ import { COLORS, SIZES } from '../constants/theme'
 
 const { height, width } = Dimensions.get("window")
 
-const flashcards = [
-    {
-        word: "apple",
-        image: require("../assets/images/cry.jpg"),
-        video: require("../assets/images/cry.jpg")
-    },
-    {
-      word: "banana",
-      image: require("../assets/images/cry.jpg"),
-      video: require("../assets/images/cry.jpg")
-    },
-    {
-        word: "orange",
-        image: require("../assets/images/cry.jpg"),
-        video: require("../assets/images/cry.jpg")
-    },
-    {
-        word: "milk",
-        image: require("../assets/images/cry.jpg"),
-        video: require("../assets/images/cry.jpg")
-    }
-
-]
-
-function Study( {navigation} ) {
+function Study( {route, navigation} ) {
+    const item = route.params.course
+    const flashcards = item.flashcards
     const [flashCardIndex, setFlashCardIndex] = useState(1)
     const [progress, setProgress] = useState(new Animated.Value(1))
     const [showQuizModal, setShowQuizModal] = useState(false);
@@ -174,10 +152,10 @@ function Study( {navigation} ) {
                   <TouchableOpacity style={styles.content} activeOpacity={1} onPress={() => flipCard()}>
                     <Image 
                       style={styles.contentImage} 
-                      // source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}
-                      source={require('../assets/images/cry.jpg')}
+                      source={{ uri: flashcard.image }}
+                      // source={require('../assets/images/cry.jpg')}
                     />
-                    <Text style={styles.contentText}>{flashcard.word}</Text>
+                    <Text style={styles.contentText}>{flashcard.gloss}</Text>
                   </TouchableOpacity> 
                 </Animated.View>
 
@@ -185,8 +163,8 @@ function Study( {navigation} ) {
                   <TouchableOpacity style={styles.content} activeOpacity={1} onPress={() => flipCard()}>
                     <Image 
                       style={styles.contentImage} 
-                      // source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}
-                      source={require('../assets/images/cry.jpg')}
+                      source={{ uri: flashcard.image }}
+                      // source={require('../assets/images/cry.jpg')}
                     />
                     <Text style={styles.contentText}>{flashcard.word}</Text>
                   </TouchableOpacity>
@@ -244,7 +222,7 @@ function Study( {navigation} ) {
                   <Text style={{ fontSize: 20, color: COLORS.black}}>Navigate To Quiz</Text>
                 </View>
                 <TouchableOpacity 
-                  onPress={() => navigation.navigate("Quiz")}
+                  onPress={() => navigation.navigate("Quiz", {item})}
                   style={{
                     backgroundColor: COLORS.accent,
                     padding: 20, width: '100%', borderRadius: 20

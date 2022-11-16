@@ -31,6 +31,9 @@ function Navigation() {
             options={{
                 animationEnabled: true,
                 header: () => null,
+                tabBarStyle: {
+                    display: "none",
+                },
                 tabBarIcon: ({ focused, color }) => <FontAwesome5 name="camera" size={24} color={focused ? '#130b43' : '#CDCCCE'} />
             }}
         />

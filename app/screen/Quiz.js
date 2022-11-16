@@ -4,10 +4,15 @@ import quizData from '../data/QuizData'
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme'
 import { ScrollView } from 'react-native-gesture-handler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { height, width } = Dimensions.get("window")
 
-const Quiz = ( {navigation} ) => {
+const Quiz = ( {route, navigation} ) => {
+  const item = route.params.item
+  const flashcards = item.flashcards
+  console.log(flashcards)
+  
   const allQuestions = quizData
   const scroll = useRef(null)
 
