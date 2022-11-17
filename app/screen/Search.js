@@ -13,33 +13,17 @@ import {
   StatusBar
 } from 'react-native';
 
+import data from '../data/Data';
+
 function Search( {navigation} ) {
-  const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState([]);
-  const [masterDataSource, setMasterDataSource] = useState([]);
-  const [screenLoading, setScreenLoading] = useState(true)
-  useEffect(() => {
-    fetch('https://raw.githubusercontent.com/dxli94/WLASL/master/start_kit/WLASL_v0.3.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        setFilteredDataSource(responseJson);
-        setMasterDataSource(responseJson);
-        setScreenLoading(false)
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
-  const onLayoutRootView = useCallback(async () => {
-    if (!screenLoading) {
-      await SplashScreen.hideAsync();
-    }
-  }, [screenLoading]);
-
-  if (screenLoading) {
-    return null;
+  var word = data[0].flashcards;
+  for (var i=1;i<data.length;i++) {
+    var second = data[i].flashcards;
+    var word = word.concat(second);
   }
+  const [search, setSearch] = useState('');
+  const [filteredDataSource, setFilteredDataSource] = useState(word);
+  const [masterDataSource, setMasterDataSource] = useState(word);
 
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
@@ -48,11 +32,11 @@ function Search( {navigation} ) {
       // Filter the masterDataSource and update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
         // Applying filter for the inserted text in search bar
-        const itemData = item.gloss
-          ? item.gloss
+        const itemData = item.title.toUpperCase()
+          ? item.title.toUpperCase()
           : '';
-        const textData = text;
-        return itemData.indexOf(textData) > -1;
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) == 0;
       });
       setFilteredDataSource(newData);
       setSearch(text);
@@ -65,10 +49,10 @@ function Search( {navigation} ) {
   };
 
   const ItemView = ({ item }) => {
+    // for (i=0;i<item.flashcards[0].length)
     return (
       <View style={styles.itemContainer}>
         <Text style={styles.itemText} onPress={() => navigation.navigate("SearchResult", {item})}>
-          {item.instance_id}
           {item.gloss}
         </Text>
       </View>

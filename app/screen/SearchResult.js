@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Video, AVPlaybackStatus } from 'expo-av';
-
+import { ScrollView } from 'react-native-gesture-handler';
 // import all the components we are going to use
 import {
   StyleSheet,
@@ -16,17 +16,31 @@ import {
 function SearchResult({ route, navigation }) {
   const { item, otherParam } = route.params;
   const [isReady, setReady] = useState(false);
-  const filter_instances = item.instances.filter(video => video.url.indexOf(".mp4") != -1)
-  return (
+  const scroll = useRef(null)
+  const goBack = () => {
+    if(!navigation.canGoBack()) {
+        return null;
+    }
+    return navigation.goBack()
+  }
+  return ( 
     <View style={styles.container}>
+      <TouchableOpacity style={styles.backStyle} onPress={() => goBack()}>
+        <Image source={require('../assets/images/close.png')} style={{height: 20, width: 20}}/>
+      </TouchableOpacity>
       {!isReady &&
           <Text style={styles.glossStyle}>Loading ...</Text>
       }
+    <Text style={styles.glossStyle}>{item.gloss}</Text>
+    <Image style={styles.imageStyle} 
+      source={{
+        uri: item.image
+      }} />
     <Video
       style={styles.videoStyle}
       onLoadStart={() => setReady(false)}
       source={{
-        uri: filter_instances[0].url
+        uri: item.video
       }}
       useNativeControls
       resizeMode="contain"
@@ -43,23 +57,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   glossStyle: {
-    fontSize: 20,
-    padding: 20,
-    marginLeft: 150,
+    fontSize: 35,
+    left: 200,
+    bottom: 20,
     fontFamily: 'Montserrat'
   },
-  image: {
-    width: 300,
-    height: 300,
-    marginLeft: 55,
-    marginTop: 75,
+  imageStyle: {
+    width: '100%',
+    height: '70%',
+    top: -20,
   },
   videoStyle: {
-    top: 0,
+    top: -20,
     left: 0,
     bottom: 0,
     right: 0,
     height: 250,
+  },
+  backStyle: {
+    top: 20,
+    left: 22,
+  },
+  scrollContainer: {
+    marginHorizontal: 20,
   },
 });
 
