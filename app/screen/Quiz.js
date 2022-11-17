@@ -1,6 +1,6 @@
 import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Modal, Animated, Dimensions } from 'react-native'
 import React , { useState, useRef, useEffect } from 'react'
-import quizData from '../data/QuizData'
+import  QuizData  from '../data/QuizData'
 import { AntDesign } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme'
 import { ScrollView } from 'react-native-gesture-handler';
@@ -11,9 +11,10 @@ const { height, width } = Dimensions.get("window")
 const Quiz = ( {route, navigation} ) => {
   const item = route.params.item
   const flashcards = item.flashcards
-  console.log(flashcards)
+  // console.log(flashcards)
   
-  const allQuestions = quizData
+  const allQuestions = QuizData(flashcards)
+  // console.log(allQuestions)
   const scroll = useRef(null)
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -111,10 +112,11 @@ const Quiz = ( {route, navigation} ) => {
     )
   }
 
-  const renderOptions = ( currentQuestion ) => {
+  const renderOptions = ( currentQuestion, index ) => {
     const colorStyle = (option) => option==correctOption ? COLORS.success+'20'
     : option==currentOptionSelected ? COLORS.error+'20'
     : COLORS.white
+    console.log(currentQuestion)
     return (
       <View>
         {
@@ -123,7 +125,7 @@ const Quiz = ( {route, navigation} ) => {
             <TouchableOpacity
               onPress={() => validateAnswer(option)}
               disabled={isOptionDisabled}
-              key={option}
+              key={option + index}
               style={[styles.option.container, {
                 borderColor: option==correctOption
                 ? COLORS.success
@@ -191,7 +193,7 @@ const Quiz = ( {route, navigation} ) => {
           return (
           <View style={{width: width, paddingHorizontal: 16}} key={index}>
             {renderQuestion(question)}
-            {renderOptions(question)}
+            {renderOptions(question, index)}
           </View>
           )
         })}
