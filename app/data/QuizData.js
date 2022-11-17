@@ -71,8 +71,8 @@ const QuizData  = ( flashcards ) => {
         var options = shuffle([correct, option_1[i], option_2[i], option_3[i]]);
         quizData.push({
             "question" : "What sign is this?",
-            "options" : [flashcards[options[0]].gloss.valueOf(), flashcards[options[1]].gloss.valueOf(), flashcards[options[2]].gloss.valueOf(), flashcards[options[3]].gloss.valueOf()],
-            "correct_option" : flashcards[correct].gloss.valueOf()
+            "options" : [flashcards[options[0]].gloss.toString(), flashcards[options[1]].gloss.toString(), flashcards[options[2]].gloss.toString(), flashcards[options[3]].gloss.toString()],
+            "correct_option" : flashcards[correct].gloss.toString()
 
         });
     }

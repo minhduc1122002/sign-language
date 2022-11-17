@@ -13,7 +13,8 @@ const Quiz = ( {route, navigation} ) => {
   const flashcards = item.flashcards
   // console.log(flashcards)
   
-  const allQuestions = QuizData(flashcards)
+  // const allQuestions = QuizData(flashcards)
+  const [allQuestions, setAllQuestions] = useState([]);
   // console.log(allQuestions)
   const scroll = useRef(null)
 
@@ -34,6 +35,7 @@ const Quiz = ( {route, navigation} ) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
+      setAllQuestions(QuizData(flashcards))
       setShowScoreModal(false)
       setCurrentQuestionIndex(0)
       setScore(0)
