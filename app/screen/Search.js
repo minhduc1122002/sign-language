@@ -16,14 +16,21 @@ import {
 import data from '../data/Data';
 
 function Search( {navigation} ) {
-  var word = data[0].flashcards;
-  for (var i=1;i<data.length;i++) {
-    var second = data[i].flashcards;
-    var word = word.concat(second);
-  }
   const [search, setSearch] = useState('');
-  const [filteredDataSource, setFilteredDataSource] = useState(word);
-  const [masterDataSource, setMasterDataSource] = useState(word);
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
+
+  useEffect(() => {
+    fetch('https://raw.githubusercontent.com/dxli94/WLASL/master/start_kit/WLASL_v0.3.json')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        setFilteredDataSource(responseJson);
+        setMasterDataSource(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   const searchFilterFunction = (text) => {
     // Check if searched text is not blank
@@ -32,8 +39,8 @@ function Search( {navigation} ) {
       // Filter the masterDataSource and update FilteredDataSource
       const newData = masterDataSource.filter(function (item) {
         // Applying filter for the inserted text in search bar
-        const itemData = item.title.toUpperCase()
-          ? item.title.toUpperCase()
+        const itemData = item.gloss.toUpperCase()
+          ? item.gloss.toUpperCase()
           : '';
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) == 0;
