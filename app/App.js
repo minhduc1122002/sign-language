@@ -11,6 +11,7 @@ import Navigation from './components/Navigation'
 import Study from './screen/Study';
 import SearchResult from './screen/SearchResult';
 import Quiz from './screen/Quiz';
+import TTS from './screen/TTS';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -69,6 +70,11 @@ export default function App() {
           name="Quiz"
           options={{animationEnabled: true, header: () => null}}
           component={Quiz}
+        />
+        <Drawer.Screen
+          name="TTS"
+          options={{animationEnabled: true, header: () => null}}
+          component={TTS}
         />
       </Drawer.Navigator>
     </NavigationContainer>
