@@ -53,7 +53,7 @@ function Navigation() {
             options={{
                 animationEnabled: true,
                 header: () => null,
-                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="assistive-listening-systems" size={24} color={focused ? '#130b43' : '#CDCCCE'} />
+                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="assistive-listening-systems" size={24} color={focused ? "#2596be" : '#CDCCCE'} />
             }}
         />
     </Tab.Navigator>
