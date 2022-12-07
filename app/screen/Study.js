@@ -1,10 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { View, Image, StyleSheet, Alert, TouchableOpacity, Text, Animated, Dimensions, StatusBar, Modal } from 'react-native';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { ScrollView } from 'react-native-gesture-handler';
 import { COLORS, SIZES } from '../constants/theme'
-
+import { Video, AVPlaybackStatus } from 'expo-av';
+import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
 const { height, width } = Dimensions.get("window")
 
 function Study( {route, navigation} ) {
@@ -21,17 +24,26 @@ function Study( {route, navigation} ) {
     })
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
-        setFlashCardIndex(1)
-        Animated.timing(progress, {
-            toValue: 1,
-            useNativeDriver: false
-        }).start()
-        scroll.current?.scrollTo({x: 0, animated: false})
-        setShowQuizModal(false)
+        reset()
       });
       return unsubscribe;
    }, [navigation]);
    
+   const reset = () => {
+    setFlashCardIndex(1)
+        Animated.timing(progress, {
+            toValue: 1,
+            useNativeDriver: false
+        }).start()
+    scroll.current?.scrollTo({x: 0, animated: false})
+    setShowQuizModal(false)
+   }
+
+   const navigateQuiz = (item) => {
+    reset()
+    navigation.navigate("Quiz", {item})
+   }
+
     const prev = () => {
         if (flashCardIndex > 1) {
             setFlashCardIndex(flashCardIndex - 1)
@@ -115,15 +127,14 @@ function Study( {route, navigation} ) {
         { rotateY: backInterpolate }
       ]
     }
-
+    
     return (
       <View style={styles.container}>
           <View style={styles.headerBar}>
             <TouchableOpacity
-              style={{padding: 5}}
               onPress={() => goBack()}
             >
-              <Image source={require('../assets/images/close.png')} style={{height: 20, width: 20}}/>
+              <Ionicons name="ios-arrow-back-sharp" size={36} color="#2596be" />
             </TouchableOpacity>
             <View style={styles.progressBar}>
               <Animated.View 
@@ -149,24 +160,27 @@ function Study( {route, navigation} ) {
             {flashcards.map((flashcard, index) => (
               <View style={styles.contentContainer} key={index}>
                 <Animated.View style={[ frontAnimatedStyle, {opacity: frontOpacity}]}>
-                  <TouchableOpacity style={styles.content} activeOpacity={1} onPress={() => flipCard()}>
+                  <TouchableOpacity style={styles.content} activeOpacity={1}>
                     <Image 
                       style={styles.contentImage} 
                       source={{ uri: flashcard.image }}
-                      // source={require('../assets/images/cry.jpg')}
                     />
                     <Text style={styles.contentText}>{flashcard.gloss}</Text>
                   </TouchableOpacity> 
                 </Animated.View>
 
                 <Animated.View style={[styles.flipCardBack, backAnimatedStyle, {opacity: backOpacity}]}>
-                  <TouchableOpacity style={styles.content} activeOpacity={1} onPress={() => flipCard()}>
-                    <Image 
-                      style={styles.contentImage} 
-                      source={{ uri: flashcard.image }}
-                      // source={require('../assets/images/cry.jpg')}
+                  <TouchableOpacity style={styles.content} activeOpacity={1}>
+                    <Video
+                        style={styles.videoStyle}
+                        source={{
+                          uri: flashcard.video
+                        }}
+                        useNativeControls
+                        resizeMode="contain"
+                        isLooping
                     />
-                    <Text style={styles.contentText}>{flashcard.word}</Text>
+                    <Text style={styles.contentText}>{flashcard.gloss}</Text>
                   </TouchableOpacity>
                 </Animated.View>
 
@@ -212,23 +226,31 @@ function Study( {route, navigation} ) {
                 padding: 20,
                 alignItems: 'center'
               }}>
-                <Text style={{fontSize: 30, fontWeight: 'bold'}}>Hi</Text>
                 <View style={{
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
                   marginVertical: 20
                 }}>
-                  <Text style={{ fontSize: 20, color: COLORS.black}}>Navigate To Quiz</Text>
                 </View>
                 <TouchableOpacity 
-                  onPress={() => navigation.navigate("Quiz", {item})}
+                  onPress={reset}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: COLORS.accent,
+                    padding: 16, width: '100%', borderRadius: 16,
+                    marginBottom: 16
+                }}>
+                  <Text style={{ textAlign: 'center', color: COLORS.accent, fontSize: 20}}>Back To Study</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  onPress={() => navigateQuiz(item)}
                   style={{
                     backgroundColor: COLORS.accent,
-                    padding: 20, width: '100%', borderRadius: 20
+                    padding: 16, width: '100%', borderRadius: 16
                 }}>
-                  <Text style={{ textAlign: 'center', color: COLORS.black, fontSize: 20}}>Take Quiz</Text>
-                  </TouchableOpacity>
+                  <Text style={{ textAlign: 'center', color: COLORS.white, fontSize: 20}}>Take Quiz</Text>
+                </TouchableOpacity>
                 </View>
               </View>
             </Modal>
@@ -242,14 +264,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 24,
+    paddingVertical: 36,
   },
   headerBar: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    alignItems: "center"
+    alignItems: "center",
+    marginBottom: 16
   },
   progressBar: {
     width: '85%',
@@ -268,7 +291,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: width * 0.9,
     borderRadius: 20,
-    paddingVertical: 48,
+    paddingVertical: 16,
     paddingHorizontal: 16,
     shadowColor: "#000",
     shadowOffset: {
@@ -285,7 +308,7 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 1,
     borderRadius: 10,
-    marginBottom: 32,
+    marginBottom: 20,
   },
   contentText: {
     fontSize: 28,
@@ -340,6 +363,10 @@ const styles = StyleSheet.create({
   },
   flipCardBack: {
     position: "absolute",
+  },
+  videoStyle: {
+    width: '100%',
+    height: 250,
   },
 });
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native';
+import { StyleSheet, Text, View, Platform, Image } from 'react-native';
 import { Camera } from 'expo-camera';
-import * as tf from "@tensorflow/tfjs";
+import * as tf from '@tensorflow/tfjs';
 import * as mobilenet from '@tensorflow-models/mobilenet';
+import { fetch, decodeJpeg, bundleResourceIO } from '@tensorflow/tfjs-react-native';
 import { cameraWithTensors } from '@tensorflow/tfjs-react-native';
 
 const textureDims = Platform.OS === 'ios' ?
@@ -26,21 +27,30 @@ const initialiseTensorflow = async () => {
 }
 
 export default function Recognition() {
+  
   const [hasPermission, setHasPermission] = useState(null);
   const [detections, setDetections] = useState([]);
-  const [net, setNet] = useState();
+  const [net, setNet] = useState(null);
 
 
   const handleCameraStream = (images) => {
     const loop = async () => {
       if(net) {
         if(frame % computeRecognitionEveryNFrames === 0){
-          const nextImageTensor = images.next().value;
+          const max = tf.scalar(255)
+          let nextImageTensor = images.next().value
+          nextImageTensor = tf.cast(nextImageTensor, 'float32')
+          nextImageTensor = nextImageTensor.div(max)
+          nextImageTensor = nextImageTensor.reshape([1, 224, 224, 3])
           if(nextImageTensor){
-            const objects = await net.classify(nextImageTensor);
-            if(objects && objects.length > 0){
-              setDetections(objects.map(object => object.className));
-            }
+            const prediction = await net.predict(nextImageTensor).data();
+            const clone = [...prediction]
+            const result = Array.prototype.slice.call(clone.sort((a, b) => b - a).slice(0, 3))
+            const detect = result.map(r => ({
+              "id": prediction.indexOf(r),
+              "prob": r * 100
+            }))
+            setDetections(detect)
             tf.dispose([nextImageTensor]);
           }
         }
@@ -58,7 +68,33 @@ export default function Recognition() {
       const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
       await initialiseTensorflow();
-      setNet(await mobilenet.load({version: 1, alpha: 0.25}));
+      const modelJson = require("../model/model.json");
+      const modelWeight = require("../model/group1-shard1of1.bin");
+      const model = await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight));
+      // setNet(await mobilenet.load({version: 1, alpha: 0.25}));
+      setNet(model)
+      // await initialiseTensorflow()
+      // const modelJson = require("../model/model.json");
+      // const modelWeight = require("../model/group1-shard1of1.bin");
+      // const model = await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeight));
+
+
+      // const image = require('../assets/images/A1.jpeg');
+      // const imageAssetPath = Image.resolveAssetSource(image);
+      // const response = await fetch(imageAssetPath.uri, {}, { isBinary: true });
+      // const imageDataArrayBuffer = await response.arrayBuffer();
+      // const imageData = new Uint8Array(imageDataArrayBuffer);
+
+      // // Decode image data to a tensor
+      // const max = tf.scalar(255)
+      // const imageCast = tf.cast(decodeJpeg(imageData), 'float32')
+      // const imageCastDiv = imageCast.div(max)
+      // imageCastDiv.print()
+      // const imageTensor = imageCastDiv.reshape([1, 224, 224, 3]);
+
+      // const prediction = await model.predict(imageTensor).data()
+      // console.log(prediction)
+
     })();
   }, []);
 
@@ -71,7 +107,6 @@ export default function Recognition() {
   if(!net){
     return <Text style={{padding: 36}}>Model not loaded</Text>;
   }
-
   return (
     <View style={styles.container}>
       <TensorCamera 
@@ -80,15 +115,17 @@ export default function Recognition() {
         type={Camera.Constants.Type.back}
         cameraTextureHeight={textureDims.height}
         cameraTextureWidth={textureDims.width}
-        resizeHeight={200}
-        resizeWidth={152}
+        resizeHeight={224}
+        resizeWidth={224}
         resizeDepth={3}
         autorender={true}
       />
       <View style={styles.text}>
-      {detections.map((detection, index) => 
-          <Text key={index}>{detection}</Text>
-      )}
+        {detections.map((detection, index) => (
+          <View key={index}>
+            <Text>{detection.id} - {Math.round(detection.prob * 100) / 100}</Text>
+          </View>
+        ))}
       </View>
     </View>
   );
@@ -100,11 +137,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    flex: 1,
-  },
   camera: {
-    flex: 10,
-    width: '100%',
+    flex: 1,
+    width: '100%'
   },
 });

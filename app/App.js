@@ -15,7 +15,7 @@ import TTS from './screen/TTS';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-
+    
 export default function App() {
 
   const [appIsReady, setAppIsReady] = useState(false);

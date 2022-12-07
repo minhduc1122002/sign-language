@@ -55,10 +55,11 @@ function Search( {navigation} ) {
     }
   };
 
-  const ItemView = ({ item }) => {
+  const ItemView = ({ item, index }) => {
     // for (i=0;i<item.flashcards[0].length)
+    const color = index % 2 == 0 ? "#fff" : '#fafafa'
     return (
-      <View style={styles.itemContainer}>
+      <View style={[styles.itemContainer, {backgroundColor: color}]}>
         <Text style={styles.itemText} onPress={() => navigation.navigate("SearchResult", {item})}>
           {item.gloss}
         </Text>
@@ -67,10 +68,9 @@ function Search( {navigation} ) {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <View style={styles.searchBarContainer}>
-          <Searchbar 
+    <View style={styles.container}>
+      <View style={styles.searchBarContainer}>
+        <Searchbar 
             searchIcon={
               <Feather name="search" color="#b4b4b4" size = {20} />
             }
@@ -80,15 +80,14 @@ function Search( {navigation} ) {
             onClear={(text) => searchFilterFunction('')}
             value={search}
             placeholder="Search"
-          />
-        </View>
-        <FlatList
+        />
+      </View>
+      <FlatList
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
           renderItem={ItemView}
-        />
-      </View>
-    </SafeAreaView>
+      />
+    </View>
   );
 };
 
@@ -96,6 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingVertical: 24
   },
   itemContainer: {
     borderColor: "#f3f3f3",
@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: "#2596be"
   },
   searchBar: {
     borderRadius: 8
@@ -115,7 +116,8 @@ const styles = StyleSheet.create({
   itemText: {
     padding: 12,
     fontSize: 18,
-    fontFamily: 'Montserrat'
+    fontFamily: 'Montserrat',
+    textTransform: 'capitalize'
   },
 });
 

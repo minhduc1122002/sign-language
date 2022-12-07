@@ -1,21 +1,18 @@
-import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Modal, Animated, Dimensions } from 'react-native'
+import { SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, Modal, Animated, Dimensions, Image } from 'react-native'
 import React , { useState, useRef, useEffect } from 'react'
 import  QuizData  from '../data/QuizData'
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { COLORS, SIZES } from '../constants/theme'
 import { ScrollView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 const { height, width } = Dimensions.get("window")
 
 const Quiz = ( {route, navigation} ) => {
   const item = route.params.item
   const flashcards = item.flashcards
-  // console.log(flashcards)
-  
-  // const allQuestions = QuizData(flashcards)
   const [allQuestions, setAllQuestions] = useState([]);
-  // console.log(allQuestions)
   const scroll = useRef(null)
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -33,8 +30,32 @@ const Quiz = ( {route, navigation} ) => {
     outputRange: ['0%', '100%']
   })
 
+  const updateProgress = async (currentCourse, percentage) => {
+    try {
+      const updatedProgress = {
+        ...currentCourse,
+        progress: `${percentage}%`
+      }
+      const itemString = await AsyncStorage.getItem('Progress')
+      const items = JSON.parse(itemString)
+      const newItems = [...items]
+      if (items != null) {
+          const currentIndex = items.findIndex((item) => item.title === currentCourse.title)
+          if (percentage < parseFloat(items[currentIndex].progress.replace('%',''))) {
+            return navigation.navigate("Learn")
+          }
+          newItems.splice(currentIndex, 1, updatedProgress)
+          await AsyncStorage.setItem('Progress', JSON.stringify(newItems))
+          navigation.navigate("Learn")
+      }
+    } catch (e) {
+        console.log(e)
+    }
+  }
+
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener('focus', async () => {
+
       setAllQuestions(QuizData(flashcards))
       setShowScoreModal(false)
       setCurrentQuestionIndex(0)
@@ -97,19 +118,23 @@ const Quiz = ( {route, navigation} ) => {
       useNativeDriver: false
     }).start();
   }
-  
+
   const renderQuestion = ( currentQuestion ) => {
     return (
       <View style={{
-        marginVertical: 40
+        marginVertical: 16,
       }}>
-        {/*Question Counter*/}
-        <View style={styles.questionCounter.container}>
-          <Text style={styles.questionCounter.text}>{currentQuestionIndex+1} / {allQuestions.length}</Text>
-        </View>
-
         {/*Question*/}
         <Text style={styles.question.text}>{currentQuestion.question}</Text>
+        <Video
+          style={styles.videoStyle}
+          source={{
+            uri: currentQuestion.video
+          }}
+          useNativeControls
+          resizeMode="contain"
+          isLooping
+        />
       </View>
     )
   }
@@ -118,7 +143,6 @@ const Quiz = ( {route, navigation} ) => {
     const colorStyle = (option) => option==correctOption ? COLORS.success+'20'
     : option==currentOptionSelected ? COLORS.error+'20'
     : COLORS.white
-    console.log(currentQuestion)
     return (
       <View>
         {
@@ -172,38 +196,60 @@ const Quiz = ( {route, navigation} ) => {
   }
   const renderProgressBar = () => {
     return (
-      <View style={styles.progressBar.container}>
-        <Animated.View style={[styles.progressBar.component, { width: progessAnim }]}>
+      <View style={styles.progressBar}>
+        <Animated.View 
+          style={{
+            height: 24,
+            borderRadius: 24,
+            backgroundColor: '#30bdf0',
+            borderColor: '#2ba9d6',
+            borderWidth: 5,
+            width: progessAnim
+          }}>
         </Animated.View>
       </View>
     )
   }
 
+  const goBack = () => {
+    if(!navigation.canGoBack()) {
+        return null;
+    }
+    return navigation.goBack()
+  }
+  
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{paddingHorizontal: 16}}>
+    <View style={styles.container}>
+      <View style={styles.headerBar}>
+        <TouchableOpacity
+          onPress={() => goBack()}
+        >
+          <Ionicons name="ios-arrow-back-sharp" size={36} color="#2596be" />
+        </TouchableOpacity>
         {renderProgressBar()}
       </View>
-      <ScrollView
-        ref={scroll}
-        horizontal={true}
-        pagingEnabled={true}
-        scrollEnabled={false}
-        showsHorizontalScrollIndicator={false}
-      >
-        {allQuestions.map((question, index) => {
-          return (
-          <View style={{width: width, paddingHorizontal: 16}} key={index}>
-            {renderQuestion(question)}
-            {renderOptions(question, index)}
-          </View>
-          )
-        })}
+      <ScrollView>
+        <ScrollView
+          ref={scroll}
+          horizontal={true}
+          pagingEnabled={true}
+          scrollEnabled={false}
+          showsHorizontalScrollIndicator={false}
+        >
+          {allQuestions.map((question, index) => {
+            return (
+            <View style={{width: width, paddingHorizontal: 16}} key={index}>
+              {renderQuestion(question)}
+              {renderOptions(question, index)}
+            </View>
+            )
+          })}
+        </ScrollView>
+        <View style={{paddingHorizontal: 16}}>
+          {renderNextButton()}
+        </View>
       </ScrollView>
-      <View style={{paddingHorizontal: 16}}>
-        {renderNextButton()}
-      </View>
-        <Modal
+      <Modal
           animationType="slide"
           transparent={true}
           visible={showScoreModal}
@@ -238,53 +284,51 @@ const Quiz = ( {route, navigation} ) => {
                 }}>/ {allQuestions.length}</Text>
               </View>
               <TouchableOpacity 
-              onPress={restartQuiz}
-              style={{
-                backgroundColor: COLORS.accent,
-                padding: 20, width: '100%', borderRadius: 20
-              }}>
-                <Text style={{
-                  textAlign: 'center', color: COLORS.black, fontSize: 20
-                }}>Retry Quiz</Text>
-              </TouchableOpacity>
+                  onPress={restartQuiz}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: COLORS.accent,
+                    padding: 16, width: '100%', borderRadius: 16,
+                    marginBottom: 16
+                }}>
+                  <Text style={{ textAlign: 'center', color: COLORS.accent, fontSize: 20}}>Retry Quiz</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                  onPress={() => updateProgress(item, (score / allQuestions.length) * 100)}
+                  style={{
+                    backgroundColor: COLORS.accent,
+                    padding: 16, width: '100%', borderRadius: 16
+                }}>
+                  <Text style={{ textAlign: 'center', color: COLORS.white, fontSize: 20}}>Finish Quiz</Text>
+                </TouchableOpacity>
             </View>
-
           </View>
         </Modal>
-    </SafeAreaView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 36,
     backgroundColor: '#fff',
-    position: 'relative'
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 36,
+  },
+  headerBar: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    alignItems: "center",
+    marginBottom: 16
   },
   progressBar: {
-    container: {
-      width: '100%',
-      height: 20,
-      borderRadius: 20,
-      backgroundColor: 'rgba(0, 0, 0, 0.125)'
-    },
-    component: {
-      height: 20,
-      borderRadius: 20,
-      backgroundColor: COLORS.accent
-    }
-  },
-  questionCounter: {
-    container: {
-      flexDirection: 'row',
-      alignItems: 'flex-end'
-    },
-    text: {
-      color: '#171717',
-      fontSize: 20,
-      opacity: 0.6,
-    }
+    width: '85%',
+    height: 24,
+    backgroundColor: '#f3f3f3',
+    borderRadius: 20,
   },
   question: {
     text: {
@@ -336,7 +380,13 @@ const styles = StyleSheet.create({
       fontSize: 20,
       color: "#fff",
       textAlign: 'center'
-    }
+    },
+  },
+  videoStyle: {
+    marginTop: 16,
+    width: '100%',
+    height: 250,
   }
 })
+
 export default Quiz

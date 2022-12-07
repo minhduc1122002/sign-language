@@ -92,6 +92,7 @@ function Category( { navigation } ) {
                     }
                 ]}
                 style={styles.gridView}
+                stickySectionHeadersEnabled={false}
                 renderItem={({ item, section, index }) => {
                     return (
                     <TouchableOpacity style={styles.itemContainer} onPress={() => addProgress(item)}>
@@ -124,7 +125,7 @@ function Category( { navigation } ) {
                             <Text style={styles.sectionHeader}>My courses</Text>
                             {progress?.map((p, index) => (
                                 <View style={{marginVertical: 8}} key={index}>
-                                    <TouchableOpacity style={[styles.itemContainer, styles.learnedItemContainer]} onPress={() => navigation.navigate("Study")}>
+                                    <TouchableOpacity style={[styles.itemContainer, styles.learnedItemContainer]} onPress={() => navigation.navigate("Study", {course: p})}>
                                         <Image style={[styles.itemImage, styles.learnedItemImage]} source={{ uri: p.image }}/>
                                         <View style={{padding: 5, flex: 1}}>
                                             <Text style={styles.itemInfo.info}>{p.title}</Text>
@@ -206,10 +207,9 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 20,
         fontFamily: 'Poppins',
-        alignItems: 'center',
         color: '#130b43',
         marginLeft: 8,
-        marginTop: 12
+        marginTop: 12,
     },
     banner: {
         resize: 'cover',

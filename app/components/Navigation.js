@@ -23,7 +23,7 @@ function Navigation() {
             options={{
                 animationEnabled: true,
                 header: () => null,
-                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="book" size={24} color={focused ? '#130b43' : '#CDCCCE'} />
+                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="book" size={24} color={focused ? "#2596be" : '#CDCCCE'} />
             }}
         />
         <Tab.Screen 
@@ -35,7 +35,7 @@ function Navigation() {
                 tabBarStyle: {
                     display: "none",
                 },
-                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="camera" size={24} color={focused ? '#130b43' : '#CDCCCE'} />
+                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="camera" size={24} color={focused ? "#2596be" : '#CDCCCE'} />
             }}
         />
         <Tab.Screen 
@@ -44,7 +44,7 @@ function Navigation() {
             options={{
                 animationEnabled: true,
                 header: () => null,
-                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="search" size={24} color={focused ? '#130b43' : '#CDCCCE'} />
+                tabBarIcon: ({ focused, color }) => <FontAwesome5 name="search" size={24} color={focused ? "#2596be" : '#CDCCCE'} />
             }}
         />
         <Tab.Screen 
