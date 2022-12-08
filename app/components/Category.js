@@ -109,7 +109,7 @@ function Category( { navigation } ) {
                 ListHeaderComponent={() => (
                     <>
                         <View style={{flex: 1, padding: 10}}>
-                            <Image style={styles.banner} source={{ uri: "https://firebasestorage.googleapis.com/v0/b/e-learning-2497f.appspot.com/o/users%2Fe656feba-37c6-4900-80b4-7dd40b038aef.jpg?alt=media&token=e3340868-2bf2-4b14-b86e-9b70ca2b2a47" }}/>
+                            <Image style={styles.banner} source={require('../assets/images/banner.png')}/>
                         </View>
                         <View style={{flex: 1, padding: 10, marginVertical: 16}}>
                             <Searchbar 
@@ -122,7 +122,7 @@ function Category( { navigation } ) {
                             />
                         </View>
                         <View>
-                            <Text style={styles.sectionHeader}>My courses</Text>
+                            {progress.length != 0 && <Text style={styles.sectionHeader}>My courses</Text>}
                             {progress?.map((p, index) => (
                                 <View style={{marginVertical: 8}} key={index}>
                                     <TouchableOpacity style={[styles.itemContainer, styles.learnedItemContainer]} onPress={() => navigation.navigate("Study", {course: p})}>
@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
     },
     banner: {
         resize: 'cover',
+        width: '100%',
         height: 200,
         borderRadius: 10,
     },
