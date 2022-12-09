@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, Platform, Image, TouchableOpacity, ActivityIndicator, Modal, TextInput, Keyboard } from 'react-native';
 import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
@@ -13,8 +13,8 @@ const textureDims = Platform.OS === 'ios' ?
     width: 1080,
   } :
    {
-    height: 1200,
-    width: 1600,
+    height: 1920,
+    width: 1080,
   };
 
 let frame = 0;
@@ -38,11 +38,20 @@ export default function Recognition( {navigation} ) {
   const [toggleCam, setToggleCam] = useState(true)
   const [sentenceModalVisible, setSentenceModalVisible] = useState(false)
   const [camModalVisible, setCamModalVisible] = useState(false)
+  const [cameraType, setCameraStyle] = useState(Camera.Constants.Type.back)
 
   const toggleCamera = () => {
     setToggleCam(!toggleCam)
     if (toggleCam) {
       setCamModalVisible(true)
+    }
+  }
+
+  const changeCameraType = () => {
+    if (cameraType == Camera.Constants.Type.back) {
+      setCameraStyle(Camera.Constants.Type.front)
+    } else {
+      setCameraStyle(Camera.Constants.Type.back)
     }
   }
 
@@ -173,20 +182,26 @@ export default function Recognition( {navigation} ) {
         >
           <Ionicons name="ios-arrow-back-sharp" size={36} color="#2596be" />
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => changeCameraType()}
+        >
+          <Ionicons name="md-camera-reverse" size={36} color="#2596be" />
+        </TouchableOpacity>
       </View>
       <View style={styles.cameraContainer}>
         {toggleCam && 
         <TensorCamera 
           style={styles.camera} 
           onReady={handleCameraStream}
-          type={Camera.Constants.Type.back}
+          type={cameraType}
           cameraTextureHeight={textureDims.height}
           cameraTextureWidth={textureDims.width}
           resizeHeight={224}
           resizeWidth={224}
           resizeDepth={3}
           autorender={true}
-        />}
+        />
+      }
         <View style={{
           position: 'absolute',
           alignItems: 'center',
@@ -329,7 +344,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     alignItems: "center",
-    paddingVertical: 10,
+    paddingVertical: 16,
     zIndex: 1
   },
   cameraContainer: {

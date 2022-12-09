@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: 24
+    paddingTop: 32
   },
   textInputContainer: {
     width: '100%',

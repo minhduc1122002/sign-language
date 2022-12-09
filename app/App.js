@@ -7,6 +7,7 @@ import React, {useCallback, useState, useEffect} from 'react'
 
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
+import { Asset } from 'expo-asset';
 import Navigation from './components/Navigation'
 import Study from './screen/Study';
 import SearchResult from './screen/SearchResult';
@@ -14,7 +15,17 @@ import Quiz from './screen/Quiz';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
-    
+
+function cacheImages(images) {
+  return images.map(image => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+}
+
 export default function App() {
 
   const [appIsReady, setAppIsReady] = useState(false);
@@ -22,16 +33,25 @@ export default function App() {
   useEffect(() => {
     async function prepare() {
       try {
+        SplashScreen.preventAutoHideAsync();
+
+        const imageAssets = cacheImages([
+          require('./assets/images/banner.png'),
+        ]);
+
         await Font.loadAsync({
           'feather': require('./assets/font/feather_bold_by_typicalbro44_dee263c.ttf'),
           'Montserrat': require('./assets/font/Montserrat-Regular.ttf'),
           'Poppins': require('./assets/font/Poppins-Bold.ttf')
         });
-        await new Promise(resolve => setTimeout(resolve, 2000));
+
+        await Promise.all([...imageAssets]);
       } catch (e) {
+        // You might want to provide this error information to an error reporting service
         console.warn(e);
       } finally {
         setAppIsReady(true);
+        SplashScreen.hideAsync();
       }
     }
     prepare();
