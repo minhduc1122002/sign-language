@@ -57,7 +57,6 @@ const Quiz = ( {route, navigation} ) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', async () => {
-
       setAllQuestions(QuizData(flashcards))
       setShowScoreModal(false)
       setCurrentQuestionIndex(0)
@@ -73,7 +72,7 @@ const Quiz = ( {route, navigation} ) => {
       scroll.current?.scrollTo({x: 0, animated: false})
     });
     return unsubscribe;
- }, [navigation]);
+ }, [navigation, flashcards]);
 
   const validateAnswer = (selectedOption) => {
     let correct_option = allQuestions[currentQuestionIndex]['correct_option'];
@@ -105,10 +104,9 @@ const Quiz = ( {route, navigation} ) => {
   }
 
   const restartQuiz = () => {
-    setShowScoreModal(false);
-    setCurrentQuestionIndex(0);
+    setShowScoreModal(false)
+    setCurrentQuestionIndex(0)
     setScore(0);
-
     setCurrentOptionSelected(null);
     setCorrectOption(null);
     setIsOptionDisabled(false);

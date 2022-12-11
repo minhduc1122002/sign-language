@@ -31,10 +31,10 @@ function Study( {route, navigation} ) {
    
    const reset = () => {
     setFlashCardIndex(1)
-        Animated.timing(progress, {
-            toValue: 1,
-            useNativeDriver: false
-        }).start()
+    Animated.timing(progress, {
+        toValue: 1,
+        useNativeDriver: false
+    }).start()
     scroll.current?.scrollTo({x: 0, animated: false})
     setShowQuizModal(false)
    }

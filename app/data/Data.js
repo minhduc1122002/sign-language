@@ -285,7 +285,7 @@ export default data = [
 			{
         		"gloss": "gold",
 				"image": "https://about.canva.com/wp-content/uploads/sites/8/2019/07/gold.png",
-				"video": "https://www.handspeak.com/word/g/gold.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/34/34426.mp4",
 			},
 			{
         		"gloss": "grey",
@@ -295,17 +295,17 @@ export default data = [
 			{
         		"gloss": "orange",
 				"image": "https://artincontext.org/wp-content/uploads/2021/06/How-to-Make-Orange-Paint.jpg",
-				"video": "http://aslbricks.org/New/ASL-Videos/orange.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/21/21610.mp4",
 			},
 			{
         		"gloss": "pink",
 				"image": "https://about.canva.com/wp-content/uploads/sites/8/2019/03/pink.png",
-				"video": "http://aslbricks.org/New/ASL-Videos/pink.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/22/22812.mp4",
 			},
 			{
         		"gloss": "purple",
 				"image": "https://about.canva.com/wp-content/uploads/sites/8/2019/03/purple.png",
-				"video": "http://aslbricks.org/New/ASL-Videos/purple.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/30/30562.mp4",
 			},
 			{
         		"gloss": "red",
@@ -325,7 +325,7 @@ export default data = [
 			{
         		"gloss": "white",
 				"image": "https://about.canva.com/wp-content/uploads/sites/8/2019/03/white.png",
-				"video": "http://aslbricks.org/New/ASL-Videos/white.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/34/34525.mp4",
 			},
 			{
     			"gloss": "yellow",
@@ -335,12 +335,12 @@ export default data = [
 			{
     			"gloss": "sky",
 				"image": "https://colorcodes.io/wp-content/uploads/2020/04/sky-blue-color-swatch-scaled.jpg",
-				"video": "http://aslbricks.org/New/ASL-Videos/sky.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/32/32839.mp4",
 			},
 			{
     			"gloss": "tan",
 				"image": "https://about.canva.com/wp-content/uploads/sites/8/2019/03/tan.png",
-				"video": "http://aslbricks.org/New/ASL-Videos/ocean.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/34/34506.mp4",
 			},
 			{
        			"gloss": "peach",
@@ -363,7 +363,7 @@ export default data = [
 			{
         		"gloss": "teacher",
 				"image": "https://img.freepik.com/free-vector/teacher-standing-near-blackboard-holding-stick-isolated-flat-vector-illustration-cartoon-woman-character-near-chalkboard-pointing-alphabet_74855-8600.jpg?w=2000",
-				"video": "https://www.handspeak.com/word/t/teacher.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/27/27868.mp4",
 			},
 			{
         		"gloss": "singer",
@@ -378,7 +378,7 @@ export default data = [
 			{
        			"gloss": "actor",
 				"image": "https://www.yourfreecareertest.com/wp-content/uploads/2016/07/actor.jpg",
-				"video": "https://media.spreadthesign.com/video/mp4/13/118328.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/30/30916.mp4",
 			},
 			{
         		"gloss": "waiter",
@@ -448,7 +448,7 @@ export default data = [
 			{
 				"gloss": "detective",
 				"image": "https://static.vecteezy.com/system/resources/previews/000/173/592/original/vector-detective-searching-for-a-clue.jpg",
-				"video": "https://www.handspeak.com/word/d/detective.mp4",
+				"video": "https://www.signingsavvy.com/media2/mp4-ld/9/9086.mp4",
 			},
 			{
 				"gloss": "painter",
@@ -500,7 +500,7 @@ export default data = [
 			{
 				"gloss": "sandwich",
 				"image": "https://www.thatlangon.com/wp-content/uploads/2021/07/cachlamsandwich2.jpg",
-				"video": "https://www.handspeak.com/word/s/sandwich.mp4",
+				"video": "http://www.aslsearch.com/signs/videos/sandwich.mp4",
 			},
 			{
 				"gloss": "hamburger",
@@ -515,7 +515,7 @@ export default data = [
 			{
 				"gloss": "egg",
 				"image": "https://images-prod.healthline.com/hlcmsresource/images/AN_images/health-benefits-of-eggs-1296x728-feature.jpg",
-				"video": "https://www.handspeak.com/word/e/egg2.mp4",
+				"video": "https://media.spreadthesign.com/video/mp4/13/74885.mp4",
 			},
 			{
 				"gloss": "meat",
@@ -530,7 +530,7 @@ export default data = [
 			{
 				"gloss": "hot dog",
 				"image": "http://cdn.tgdd.vn/Files/2020/07/27/1274156/cach-lam-hot-dog-han-quoc-sieu-ngon-be-thich-me-chi-muon-an-nhieu-hon-202007271527104036.jpg",
-				"video": "https://www.handspeak.com/word/h/hot-dog2.mp4",
+				"video": "http://www.aslsearch.com/signs/videos/hot-dog2.mp4",
 			},
 			{
 				"gloss": "bread",
@@ -560,7 +560,7 @@ export default data = [
 			{
 				"gloss": "water",
 				"image": "https://www.ashevillenc.gov/wp-content/uploads/2021/05/water-glass-asheville.jpg",
-				"video": "https://www.handspeak.com/word/w/water.mp4",
+				"video": "http://www.aslsearch.com/signs/videos/water.mp4",
 			},
 		]
 	},
