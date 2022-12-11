@@ -10,7 +10,8 @@ import {
   FlatList,
   SafeAreaView,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  ActivityIndicator
 } from 'react-native';
 
 import data from '../data/Data';
@@ -19,6 +20,7 @@ function Search( {navigation} ) {
   const [search, setSearch] = useState('');
   const [filteredDataSource, setFilteredDataSource] = useState([]);
   const [masterDataSource, setMasterDataSource] = useState([]);
+  const [searchIsReady, setSearchIsReady] = useState(false);
 
   useEffect(() => {
     fetch('https://raw.githubusercontent.com/dxli94/WLASL/master/start_kit/WLASL_v0.3.json')
@@ -26,6 +28,7 @@ function Search( {navigation} ) {
       .then((responseJson) => {
         setFilteredDataSource(responseJson);
         setMasterDataSource(responseJson);
+        setSearchIsReady(true)
       })
       .catch((error) => {
         console.error(error);
@@ -82,11 +85,15 @@ function Search( {navigation} ) {
             placeholder="Search"
         />
       </View>
+      {searchIsReady ? 
       <FlatList
           data={filteredDataSource}
           keyExtractor={(item, index) => index.toString()}
           renderItem={ItemView}
-      />
+      /> : 
+      <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#2596be" />
+      </View>}
     </View>
   );
 };

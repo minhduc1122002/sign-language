@@ -20,7 +20,7 @@ function Study( {route, navigation} ) {
     const scroll = useRef(null)
     const progressAnim = progress.interpolate({
         inputRange: [1, flashcards.length],
-        outputRange: [100, 300]
+        outputRange: ['10%', '100%']
     })
     useEffect(() => {
       const unsubscribe = navigation.addListener('focus', () => {
@@ -216,25 +216,23 @@ function Study( {route, navigation} ) {
             <View style={{
               flex: 1,
               backgroundColor: '#fff',
-              alignItems: 'center',
-              justifyContent: 'center'
             }}>
               <View style={{
-                backgroundColor: "#fff",
-                width: '90%',
-                borderRadius: 20,
+                flex: 3,
+                alignItems: 'center',
+                justifyContent: 'center',
                 padding: 20,
-                alignItems: 'center'
               }}>
-                <View style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  marginVertical: 20
-                }}>
-                </View>
+                <Image style={{height: 160, width: 160}} source={require('../assets/images/logo.png')}/>
+              </View>
+              <View style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 20,
+              }}>
                 <TouchableOpacity 
-                  onPress={reset}
+                  onPress={() => reset()}
                   style={{
                     borderWidth: 1,
                     borderColor: COLORS.accent,
@@ -305,7 +303,7 @@ const styles = StyleSheet.create({
   },
   contentImage: {
     width: '100%',
-    height: undefined,
+    resizeMode: 'contain',
     aspectRatio: 1,
     borderRadius: 10,
     marginBottom: 20,

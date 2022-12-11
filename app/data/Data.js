@@ -1,137 +1,136 @@
 export default data = [
-	{
-		"title": "Alphabet",
+	{ 	"title": "Alphabet",
 		"level": "Easy",
-		"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Alphabet_Chart.png",
+		"image": "https://img.freepik.com/premium-vector/abstract-handmade-letter-seamless-pattern-background-childish-handcrafted-wallpaper-design-card-wallpaper-baby-nappy-holiday-wrapping-paper-textile-fabric-bag-print-diaper-t-shirt-etc_292734-2365.jpg",
 		"flashcards": [
 			{
         		"gloss": "a",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_A.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/A-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528809789.5467.mp4",
 			},
 			{
         		"gloss": "b",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_B.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/B-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528809836.7505.mp4",
 			},
 			{
         		"gloss": "c",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_C.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/C-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://www.signingsavvy.com/media2/mp4-ld/26/26712.mp4",
 			},
 			{
         		"gloss": "d",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_D.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/D-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811093.1409.mp4",
 			},
 			{
         		"gloss": "e",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_E.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/E-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811066.6785.mp4",
 			},
 			{
         		"gloss": "f",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_F.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/F-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811116.918.mp4",
 			},
 			{
         		"gloss": "g",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_G.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/G-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811214.4928.mp4",
 			},
 			{
         		"gloss": "h",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_H.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/H-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://www.signingsavvy.com/signs/mp4/10/10007.mp4",
 			},
 			{
         		"gloss": "i",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_I.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/I-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811446.7425.mp4",
 			},
 			{
         		"gloss": "j",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_J.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/J-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811480.114.mp4",
 			},
 			{
         		"gloss": "k",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_K.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/K-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811506.2355.mp4",
 			},
 			{
         		"gloss": "l",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_L.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/L-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://www.signingsavvy.com/media2/mp4-ld/26/26721.mp4",
 			},
 			{
        			"gloss": "m",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_M.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/M-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811613.4355.mp4",
 			},
 			{
         		"gloss": "n",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_N.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/N-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811743.8237.mp4",
 			},
 			{
         		"gloss": "o",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_O.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/O-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811854.2948.mp4",
 			},
 			{
         		"gloss": "p",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_P.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/P-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528811887.8913.mp4",
 			},
 			{
         		"gloss": "q",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_Q.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/Q-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528812058.7327.mp4",
 			},
 			{
         		"gloss": "r",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_R.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/R-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528812224.3051.mp4",
 			},
 			{
         		"gloss": "s",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_S.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/S-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528812514.7122.mp4",
 			},
 			{
         		"gloss": "t",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_T.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/T-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528812851.4394.mp4",
 			},
 			{
         		"gloss": "u",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_U.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/U-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528812876.3384.mp4",
 			},
 			{
         		"gloss": "v",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_V.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/V-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528812899.1086.mp4",
 			},
 			{
         		"gloss": "w",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_W.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/W-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://media.asldeafined.com/vocabulary/1528812930.671.mp4",
 			},
 			{
         		"gloss": "x",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_X.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/X-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://www.signingsavvy.com/media2/mp4-ld/26/26733.mp4",
 			},
 			{
         		"gloss": "y",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_Y.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/Y-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://www.signingsavvy.com/media2/mp4-ld/26/26734.mp4",
 			},
 			{
         		"gloss": "z",
-				"image": "https://www.megaworkbook.com/images/content/English/AlphabetReading/Objects_Starting_With_Alphabet_Z.png",
+				"image": "https://i0.wp.com/www.flashcardsforkindergarten.com/wp-content/uploads/2020/05/Z-alphabet-flashcards.jpg?ssl=1",
 				"video": "https://www.signingsavvy.com/media2/mp4-ld/26/26735.mp4",
 			},
 		]
@@ -139,106 +138,106 @@ export default data = [
 	{
 		"title": "Number",
 		"level": "Easy",
-		"image": "https://files.liveworksheets.com/def_files/2020/8/23/823152557225/823152557225001.jpg",
+		"image": "https://cdn.dribbble.com/users/210795/screenshots/9922053/media/821ac1c5062a1a11c677c3f3f9d31d60.png?compress=1&resize=400x300",
 		"flashcards": [
 			{
         		"gloss": "zero",
-				"image": "https://www.printableparadise.com/numbers/number-0-outline.png",
+				"image": "https://as2.ftcdn.net/v2/jpg/01/28/45/05/1000_F_128450526_rAO8pWv9b5EbiZyRvddJMFAWJ45LlB5T.jpg",
 				"video": "http://www.aslsearch.com/signs/videos/zero.mp4",
 			},
 			{
         		"gloss": "one",
-				"image": "https://www.printableparadise.com/numbers/number-1-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/O7XSco4qd8KlxgwOLz0XveEBaXH98l0bQMVJpFYu0MY.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/one.mp4",
 			},
 			{
         		"gloss": "two",
-				"image": "https://www.printableparadise.com/numbers/number-2-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/P4ry85MhtvrYx3fhmBnEfejqHrMTz28zjZ4jHJCexNk.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/two.mp4",
 			},
 			{
         		"gloss": "three",
-				"image": "https://www.printableparadise.com/numbers/number-3-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/IKIzkwLAJKlh68MUBEC9XUNVnagguz7h21KhhjT1AXA.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/three.mp4",
 			},
 			{
         		"gloss": "four",
-				"image": "https://www.printableparadise.com/numbers/number-4-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/oAK6kkrxwiPSoSnb68mCm60moaxixeCkJAuPmPNIIzW.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/four.mp4",
 			},
 			{
         		"gloss": "five",
-				"image": "https://www.printableparadise.com/numbers/number-5-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/CvqdW7D9SRs17qTo8aBCJSGiLlSqBrxToyBrxx4YVrx.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/five.mp4",
 			},
 			{
         		"gloss": "six",
-				"image": "https://www.printableparadise.com/numbers/number-6-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/HPEMtG5D33qhZXiANyx9c7hbfqXRLsgJKFBqA85O5U0.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/six.mp4",
 			},
 			{
         		"gloss": "seven",
-				"image": "https://www.printableparadise.com/numbers/number-7-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/mPcJl0okpMFX9fTDpQlwsaYWJfvXuNVdxCeIZohxqzd.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/seven.mp4",
 			},
 			{
         		"gloss": "eight",
-				"image": "https://www.printableparadise.com/numbers/number-8-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/X1xruLMxNXQnffMx5ytf747dJAyTBeSY23HC9lhP0BW.png",
 				"video": "http://aslbricks.org/New/ASL-Videos/eight.mp4",
 			},
 			{
         		"gloss": "nine",
-				"image": "https://www.printableparadise.com/numbers/number-9-outline.png",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/BHmw6Np4JB007yJgglWN8ahkUp9rR4lpgBXxtSSMvc9.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/NI/NINE-1570.mp4", 
 			},
 			{
         		"gloss": "ten",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free-Printable-Number-Bubble-Letters-Bubble-Number-10-1536x841.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/sZYrRedxjH1voRxrRhabBnpwbddjqgvcnTCWIHRQ9mJ.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/TE/TEN-612.mp4",
 			},
 			{
         		"gloss": "eleven",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_11-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/N5b08fUCFkzhIYxs2V9pRCH5wg3xErStCWAf8twXNB0.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/EL/ELEVEN-1303.mp4",
 			},
 			{
         		"gloss": "twelve",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_12-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/DfwPwqmecpQ2HHwdiiCp3LkKAXE3eNrz4QjvhA9m8xo.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/TW/TWELVE-2286.mp4",
 			},
 			{
         		"gloss": "thirteen",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_13-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/3GAzPS2xn4pMt0arxZW5BO.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/TH/THIRTEEN-2510.mp4",
 			},
 			{
         		"gloss": "fourteen",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_14-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/5Uaiu1lCFp0Bca1jR6VdQx.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/FO/FOURTEEN-2383.mp4",
 			},
 			{
         		"gloss": "fifteen",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_15-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/7Mhn6JN5WBza6HTe2ozY1n.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/FI/FIFTEEN-1456.mp4",
 			},
 			{
         		"gloss": "sixteen",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_16-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/0p2y5J715qffGTBRO1iIhi.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/SI/SIXTEEN-3096.mp4",
 			},
 			{
         		"gloss": "seventeen",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_17-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/7fzDpNZckvDMUkk0Ka1KPQ.png",
 				"video": "https://www.signingsavvy.com/media2/mp4-ld/26/26514.mp4",
 			},
 			{
         		"gloss": "eighteen",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_18-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/11oS1GSMZFKBRRQYBh9oAz.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/EI/EIGHTEEN-2512.mp4",
 			},
 			{
         		"gloss": "nineteen",
-				"image": "https://www.freebiefindingmom.com/wp-content/uploads/2020/12/Free_Printable_Number_Bubble_Letters_Bubble_Number_19-683x1024.jpg",
+				"image": "https://transcode-v2.app.engoo.com/image/fetch/f_auto,c_limit,h_128,dpr_2/https://assets.app.engoo.com/images/5H3DhFZQEDBy9Z8Zy2vCpc.png",
 				"video": "https://aslsignbank.haskins.yale.edu/dictionary/protected_media/glossvideo/ASL/NI/NINETEEN-1567.mp4",
 			},
 		]
@@ -246,7 +245,7 @@ export default data = [
 	{
 		"title": "Color",
 		"level": "Intermediate",
-		"image": "https://www.zilliondesigns.com/blog/wp-content/uploads/Meaning-and-Uses-of-Colors-in-Logo-Design.png",
+		"image": "https://img.freepik.com/free-vector/crayon-flat-cartoon-style_138676-2626.jpg?w=2000",
 		"flashcards": [
 			{
     			"gloss": "black",
@@ -354,7 +353,7 @@ export default data = [
 	{
 		"title": "Job",
 		"level": "Intermediate",
-		"image": "https://tailieutienganh.edu.vn/public/files/upload/default/images/phu-am-danh-tu-dem-duoc-so-it-so-nhieu-khong-dem-duoc-tu-vung-nghe-nghiep-jobs-3.jpg",
+		"image": "https://news.umanitoba.ca/wp-content/uploads/2021/11/Career-Month-3-UM-Today--1200x799.png",
 		"flashcards": [
 			{
         		"gloss": "artist",
@@ -363,7 +362,7 @@ export default data = [
 			},
 			{
         		"gloss": "teacher",
-				"image": "https://knowledge-hub.com/wp-content/uploads/2021/11/Attributes-Displayed-By-A-Good-Math-Teachers-1080x675.jpg",
+				"image": "https://img.freepik.com/free-vector/teacher-standing-near-blackboard-holding-stick-isolated-flat-vector-illustration-cartoon-woman-character-near-chalkboard-pointing-alphabet_74855-8600.jpg?w=2000",
 				"video": "https://www.handspeak.com/word/t/teacher.mp4",
 			},
 			{
@@ -398,7 +397,7 @@ export default data = [
 			},
 			{
         		"gloss": "policeman",
-				"image": "https://static.vecteezy.com/system/resources/previews/005/161/807/original/cartoon-smiling-officer-policeman-standing-free-vector.jpg",
+				"image": "https://img.freepik.com/free-vector/set-police-illustration_23-2148521844.jpg?w=2000",
 				"video": "https://media.spreadthesign.com/video/mp4/13/116353.mp4",
 			},
 			{
@@ -461,7 +460,7 @@ export default data = [
 	{
 		"title": "Food & Drink",
 		"level": "Advanced",
-		"image": "http://tienganhk12.com/Upload/News/637075946351179077_maxresdefault.jpg",
+		"image": "https://img.freepik.com/premium-vector/set-cute-fast-food-cartoon-stickers_296684-464.jpg?w=2000",
 		"flashcards": [
 			{
 				"gloss": "candy",
@@ -540,7 +539,7 @@ export default data = [
 			},
 			{
 				"gloss": "cookie",
-				"image": "https://images-gmi-pmc.edge-generalmills.com/087d17eb-500e-4b26-abd1-4f9ffa96a2c6.jpg",
+				"image": "https://i.pinimg.com/originals/ac/d4/45/acd4450419e2236cf6bf2d7bb7310103.jpg",
 				"video": "http://aslbricks.org/New/ASL-Videos/cookie.mp4",
 			},
 			{
@@ -566,7 +565,7 @@ export default data = [
 		]
 	},
 	{
-		"title": "Flora Fauna",
+		"title": "Animals & Plants",
 		"level": "Advanced",
 		"image": "https://www.artzolo.com/sites/default/files/uploads/multi/7023/largest/animals_0.jpg",
 		"flashcards": [

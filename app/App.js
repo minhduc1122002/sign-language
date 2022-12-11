@@ -37,6 +37,7 @@ export default function App() {
 
         const imageAssets = cacheImages([
           require('./assets/images/banner.png'),
+          require('./assets/images/logo.png')
         ]);
 
         await Font.loadAsync({
@@ -57,11 +58,11 @@ export default function App() {
     prepare();
   }, []);
 
-  const onLayoutRootView = useCallback(async () => {
-    if (appIsReady) {
-      await SplashScreen.hideAsync();
-    }
-  }, [appIsReady]);
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (appIsReady) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [appIsReady]);
 
   if (!appIsReady) {
     return null;

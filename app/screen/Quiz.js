@@ -42,11 +42,13 @@ const Quiz = ( {route, navigation} ) => {
       if (items != null) {
           const currentIndex = items.findIndex((item) => item.title === currentCourse.title)
           if (percentage < parseFloat(items[currentIndex].progress.replace('%',''))) {
+            restartQuiz()
             return navigation.navigate("Learn")
           }
           newItems.splice(currentIndex, 1, updatedProgress)
           await AsyncStorage.setItem('Progress', JSON.stringify(newItems))
-          navigation.navigate("Learn")
+          restartQuiz()
+          return navigation.navigate("Learn")
       }
     } catch (e) {
         console.log(e)
@@ -257,32 +259,39 @@ const Quiz = ( {route, navigation} ) => {
           <View style={{
             flex: 1,
             backgroundColor: '#fff',
-            alignItems: 'center',
-            justifyContent: 'center'
           }}>
             <View style={{
-              backgroundColor: "#fff",
-              width: '90%',
-              borderRadius: 20,
+              flex: 3,
+              alignItems: 'center',
+              justifyContent: 'center',
               padding: 20,
-              alignItems: 'center'
             }}>
-              <Text style={{fontSize: 30, fontWeight: 'bold'}}>{ score > (allQuestions.length/2) ? 'Congratulations!' : 'Oops!'}</Text>
-
+              <Text style={{fontSize: 30, fontFamily: 'Poppins', color: '#130b43', textAlign: 'center'}}>{ score > (allQuestions.length/2) ? 'Congratulations!' : 'Try Again'}</Text>
               <View style={{
                 flexDirection: 'row',
                 justifyContent: 'flex-start',
                 alignItems: 'center',
-                marginVertical: 20
+                marginTop: 20
               }}>
                 <Text style={{
+                  fontFamily: 'Montserrat', 
                   fontSize: 30,
+                  textAlign: 'center',
                   color: score > (allQuestions.length/2) ? COLORS.success : COLORS.error
                 }}>{score}</Text>
                 <Text style={{
-                  fontSize: 20, color: COLORS.black
+                  fontSize: 30, color: '#130b43',
+                  fontFamily: 'Montserrat',
+                  textAlign: 'center',
                 }}>/ {allQuestions.length}</Text>
               </View>
+              </View>
+              <View style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingHorizontal: 20,
+              }}>
               <TouchableOpacity 
                   onPress={restartQuiz}
                   style={{

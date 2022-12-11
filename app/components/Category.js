@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     itemImage: {
-        resize: 'cover',
+        resizeMode: 'cover',
         height: 100,
         borderRadius: 5,
     },
