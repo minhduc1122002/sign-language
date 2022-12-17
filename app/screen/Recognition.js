@@ -28,7 +28,7 @@ const initialiseTensorflow = async () => {
 }
 const convertIndex = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
                       "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-                      "Y", "Z", "nothing", "space"]
+                      "Y", "Z", "Nothing", "Space"]
 
 export default function Recognition( {navigation} ) {
   const [sentence, setSentence] = useState('')
@@ -56,7 +56,14 @@ export default function Recognition( {navigation} ) {
   }
 
   const chooseLetter = (letter) => {
-    const newSentence = sentence + letter
+    let newSentence = sentence
+    if (letter === 'Space') {
+      newSentence = sentence + ' '
+    } else if (letter === 'Nothing') {
+      newSentence = sentence + ''
+    } else {
+      newSentence = sentence + letter
+    }
     setSentence(newSentence)
     setCamModalVisible(false)
     setToggleCam(!toggleCam)
@@ -139,7 +146,6 @@ export default function Recognition( {navigation} ) {
 
   const resetState = () => {
     setSentence('')
-    setHasPermission(null)
     setDetections([])
     setToggleCam(true)
     setCamModalVisible(false)
@@ -285,7 +291,10 @@ export default function Recognition( {navigation} ) {
                   <Text style={{ textAlign: 'center', color: '#2596be', fontSize: 12}}>Close Modal</Text>
               </TouchableOpacity>
               <TouchableOpacity 
-                onPress={() => {() => navigation.navigate("TTS", {text: sentence})}}
+                onPress={() => {
+                  setCamModalVisible(!camModalVisible)
+                  return navigation.navigate("TTS", {text: sentence})
+                }}
                 style={{
                   backgroundColor: '#2596be',
                   padding: 8, borderRadius: 8
@@ -301,31 +310,44 @@ export default function Recognition( {navigation} ) {
         transparent={true}
         visible={camModalVisible}
         onRequestClose={() => {
-          setCamModalVisible(!camModalVisible);
+          setToggleCam(!toggleCam)
+          setCamModalVisible(!camModalVisible)
         }}
       >
         <View style={ {flex: 1, justifyContent: 'center', alignItems: 'center',} }>
           <View style={styles.modalView}>
-          <Text style={styles.modalText}>Choose One Of The Letters Predicted</Text>
-            {detections.length != 0 && detections.map((detection, index) => {
-              const length = `${Math.round(detection.prob * 100) / 100}%`
-              return (
-              <TouchableOpacity style={styles.letterOption} key={index} onPress={() => chooseLetter(detection.id)}>
-                <Text>{detection.id}</Text>
-                <View style={styles.progressBar}>
-                  <View 
-                    style={{
-                      height: 16,
-                      borderRadius: 16,
-                      backgroundColor: '#30bdf0',
-                      borderColor: '#2ba9d6',
-                      borderWidth: 2,
-                      width: length
-                    }}>
+            <Text style={styles.modalText}>Choose One Of The Letters Predicted</Text>
+              {detections.length != 0 && detections.map((detection, index) => {
+                const length = `${Math.round(detection.prob * 100) / 100}%`
+                return (
+                <TouchableOpacity style={styles.letterOption} key={index} onPress={() => chooseLetter(detection.id)}>
+                  <Text>{detection.id}</Text>
+                  <View style={styles.progressBar}>
+                    <View 
+                      style={{
+                        height: 16,
+                        borderRadius: 16,
+                        backgroundColor: '#30bdf0',
+                        borderColor: '#2ba9d6',
+                        borderWidth: 2,
+                        width: length
+                      }}>
+                    </View>
                   </View>
-                </View>
+                </TouchableOpacity>
+              )})}
+              <TouchableOpacity 
+                onPress={() => {
+                  setToggleCam(!toggleCam)
+                  setCamModalVisible(!camModalVisible)
+                }}
+                style={{
+                  borderWidth: 1,
+                  borderColor: '#2596be',
+                  padding: 8, borderRadius: 8,
+                }}>
+                  <Text style={{ textAlign: 'center', color: '#2596be', fontSize: 12}}>Close Modal</Text>
               </TouchableOpacity>
-            )})}
           </View>
         </View>
       </Modal>
@@ -391,7 +413,7 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   progressBar: {
-    width: '85%',
+    width: '80%',
     height: 16,
     backgroundColor: '#f3f3f3',
     borderRadius: 16,
@@ -401,7 +423,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: "center",
-    marginVertical: 10
+    marginVertical: 16
   },
   input: {
     height: 100,
